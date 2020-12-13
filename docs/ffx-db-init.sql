@@ -6,6 +6,10 @@
 -- Généré le : Dim 13 déc. 2020 à 13:39
 -- Version du serveur :  10.4.14-MariaDB
 -- Version de PHP : 7.4.10
+DROP DATABASE IF EXISTS FFX;
+
+CREATE DATABASE IF NOT EXISTS FFX;
+USE FFX;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
