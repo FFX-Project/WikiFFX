@@ -1,197 +1,188 @@
 <?php
+	//définir une classe
 	class Model {
-
-		public $id; //propriété
+		//propriétés de la classe
+		public $id;
 		public $table;
-		public $conf="default";
+		public $conf='default';
 		public $db;
+		
+		function __construct(){
+			//on fait appel à notre configuration bdd
+			$conf= conf::$databases[$this->conf];
+			try {
+				$this->db = new PDO('mysql:
+				host='.$conf['host'].';
+				dbname='.$conf['database'].';',
+				$conf['login'],
+				$conf['password']);
 
-		function __construct()
-		{
-            $conf = array(
-					        'host' => 'localhost',
-					        'database' => 'mvcslam5',
-					        'login' => 'root',
-					        'password' => ''
-					  );
-            try {
-                   $this->db = new PDO('mysql:
-                       host='.$conf['host'].';
-                       dbname='.$conf['database'],
-                       $conf['login'],
-                       $conf['password']);
-            }     catch (PDOException $e) {
-                   print "Erreur !: ".$e->getMessage()."<br/>";
-                die();
-            }
-        }
-
-		function read($field=null) {
-
-			if ($field==null) {
-				$field="*";
+			} catch (PDOException $e) {
+				print "Erreur !: " . $e->getMessage() . "<br/>";
+				die();
 			}
-
-			$sql ="SELECT ".$field.' FROM '.$this->table.' WHERE id=:id';
+		}
+		
+		//read : lecture d'une table par la clé primaire --> renvoie une seule ligne
+		function read($fields=null) {
+			if ($fields==null){
+				$fields="*";
+			}
+			/* Exécute une requête préparée en passant un tableau de valeurs */
+			$sql = 'SELECT '.$fields .' FROM '.$this->table.' WHERE id = :id';
 			echo $sql;
-
-			$stmt = $this->db->prepare($sql);
-
-			if ($stmt->execute(array(':id'=> $this->id))) {
-				$data = $stmt->fetch(PDO::FETCH_OBJ);
-				//echo "<PRE>";
-				//print_r($data);
-				//echo "</PRE>";
-				foreach ($data as $key=>$value){
+			//préparation PDO
+			$sth = $this->db->prepare($sql);
+			//chargement du résultat de la requete SQL en mémoire dans un curseur
+			if ($sth->execute(array(':id' => $this->id))) {
+				$data = $sth->fetch(PDO::FETCH_OBJ);
+				echo "<PRE>";
+				print_r($data);
+				echo "</PRE>";
+				foreach ($data as $key=>$value) {
+					//on peut créer "à la volée" les propriété de la classe
 					$this->$key = $value;
 				}
 				//return $data;
-			}
-
-			else {
-
-				echo "<br>Erreur SQL";
+			} else {
+				echo "<br /> erreur SQL";
 			}
 		}
-
+		
+		//save : insertion ou une modification d'une ligne dans BDD
 		function save($data) {
-
-			echo "save<br>";
-			echo "<PRE>";
-			print_r($data);
-			echo "</PRE>";
-
-			if (empty($data["id"])) {
-				echo "save INSERT<br>";
+			//on vérifie si id existe
+			if (empty($data["id"])){
+				//echo "insert";
 				unset($data['id']);
-				//la requete sql
-				$sql="INSERT INTO ".$this->table." (";
+				// echo "<PRE>";
+				// print_r($data);
+				// echo "</PRE>";
+				//construction requete SQL
+				$sql="INSERT INTO ".$this->table."(";
 				$values="";
-					foreach ($data as $key => $value) {
-						$sql.=$key.",";
-						$values.=":".$key.", ";
-					}
-
-				//enleve la derniere virgule
-				$sql = substr($sql, 0, -1);
-				$values = substr($values, 0, -2);
+				foreach ($data as $key => $value) {
+					$sql.=$key.",";
+					$values.=":".$key.",";
+				}
+				//enleve la denriere virgule
+				$sql = substr($sql, 0, -1); 
+				$values = substr($values, 0, -1); 
 				$sql.=") VALUES (".$values.")";
 
-
-				echo $sql;
-
-				//prepare sql
-				$stmt = $this->db->prepare($sql);
-
-				//execute sql
-				if ($stmt->execute($data)) {
-					echo "insert ok :".$this->db->lastInsertId();
+				//echo $sql;
+				//préparation SQL
+				$sth = $this->db->prepare($sql);
+				
+				//exécution SQL
+				if ($sth->execute($data)) {
+					echo "insertion ok id :".$this->db->lastInsertId();
 					$this->id=$this->db->lastInsertId();
-					} else {
-						echo"erreur<br>";
-					}
-
-
-
 				} else {
-
-				echo "Save UPDATE<br>";
+					echo "<br /> erreur SQL";
+				}
+				
+			} else {
+				echo "update";
+				// echo "<PRE>";
+				// print_r($data);
+				// echo "</PRE>";
 				$this->id=$data['id'];
 				unset($data['id']);
-
-				$sql = "UPDATE ".$this->table." SET ";
-					foreach ($data as $key => $value) {
-						$sql.=$key."= :".$key.",";
-					}
-
-				$sql= substr($sql, 0, -1);
-				$sql.= " WHERE id=".$this->id;
+				//construction requete SQL
+				$sql="UPDATE ".$this->table." SET ";
+				//$values="";
+				foreach ($data as $key => $value) {
+					$sql.=$key."= :".$key.",";
+				}
+				//enleve la denriere virgule
+				$sql = substr($sql, 0, -1); 
+				$sql.=" WHERE id=".$this->id;
 
 				echo $sql;
-
-				$stmt = $this->db->prepare($sql);
-
-				if ($stmt->execute($data)) {
-					echo "mise a jour ok";
-					} else {
-						echo "<br> erreur SQL";
-					}
-
+				//préparation SQL
+				$sth = $this->db->prepare($sql);
+				
+				//exécution SQL
+				if ($sth->execute($data)) {
+					echo "mise à jour ok ";
+				} else {
+					echo "<br /> erreur SQL";
 				}
-
-			}
-
-			function findFirst($data) {
-				//RETOURNE L42L2MENT COURANT DU TABLEAU
-				//print_r($data);
-				return current($this->find($data));
-			}
-
-			function delete($id)
-			{
-
-				$sql = "DELETE from ".$this->table." WHERE id=:id";
-
-				echo $sql;
-
-				$stmt = $this->db->prepare($sql);
-
-				if ($stmt->execute(array(':id'=> $this->id))) {
-					echo "suppression réussie";
-					} else {
-						echo "<br> erreur SQL";
-					}
-
-			}
-
-			function find($data) {
-
-				$field="*";
-				$inner=" ";
-				$condition="1=1";
-				$order="id";
-				$limit="";
-
-				if (isset($data["field"])){
-					$field=$data['field'];
-				}
-				if (isset($data["inner"])){
-					$field=$data['inner'];
-				}
-				if (isset($data["condition"])){
-					$condition=$data['condition'];
-				}
-				if (isset($data["order"])){
-					$order=$data['order'];
-				}
-				if (isset($data["limit"])){
-					$limit=$data['limit'];
-				}
-
-				$sql= 	'SELECT '.$field.
-						' FROM '.$this->table.
-						' '.$inner.
-						' WHERE '.$condition.
-						' ORDER BY '.$order.
-						' '.$limit;
-
-				echo $sql;
-
-			$stmt = $this->db->prepare($sql);
-			if ($stmt->execute()) {
-				$data = $stmt->fetchAll(PDO::FETCH_OBJ);
-				//echo "<PRE>";
-				//print_r($data);
-				//echo "</PRE>";
-				return $data;
-				}
-				//return $data;
-
-
-			else {
-
-				echo "<br>Erreur SQL";
+				
 			}
 		}
+		
+		//find : lecture d'une ou plusieurs table --> renvoie plusieurs lignes
+		function find($data) {
+			
+			$fields="*";
+			$inner=" ";
+			$condition="1=1";
+			$order="id";
+			$limit=" ";
+			
+			if (isset($data["fields"])){
+				$fields=$data["fields"];
+			}
+			if (isset($data["inner"])){
+				$inner=$data["inner"];
+			}
+			if (isset($data["condition"])){
+				$condition=$data["condition"];
+			}
+			if (isset($data["order"])){
+				$order=$data["order"];
+			}
+			if (isset($data["limit"])){
+				$limit=$data["limit"];
+			}
+			
+			/* Exécute une requête préparée en passant un tableau de valeurs */
+			$sql =	' SELECT '.$fields .
+					' FROM '.$this->table.
+					' '.$inner.
+					' WHERE '.$condition.
+					' ORDER BY '.$order.
+					' '.$limit;
+			//echo $sql;
+			//préparation PDO
+			$sth = $this->db->prepare($sql);
+			//chargement du résultat de la requete SQL en mémoire dans un curseur
+			if ($sth->execute()) {
+				$d = $sth->fetchAll(PDO::FETCH_OBJ);
+				// echo "<PRE>";
+				// print_r($d);
+				// echo "</PRE>";
+				return $d;
+			} else {
+				echo "<br /> erreur SQL";
+			}
+		}	
+
+		//findfirst : lecture du premier enreg d'un find
+		function findFirst($data) {
+			 //retourne l'élément courant du tableau
+			 //print_r($data);
+			 return current($this->find($data));
+		}
+		
+		//delete : on supprime une seule ligne sur clé primaire
+		function delete() {
+			/* Exécute une requête préparée en passant un tableau de valeurs */
+			$sql = 'DELETE FROM '.$this->table.' WHERE id = :id';
+			echo $sql;
+			//préparation PDO
+			$sth = $this->db->prepare($sql);
+			//chargement du résultat de la requete SQL en mémoire dans un curseur
+			if ($sth->execute(array(':id' => $this->id))) {
+				//suppr ok
+				return true;
+			} else {
+				//echo "<br /> erreur SQL";
+				return false;
+			}
+		}		
+		
 	}
 ?>

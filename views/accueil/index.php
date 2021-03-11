@@ -1,4 +1,5 @@
-<div class="container">
-	<h1>Bienvenue chez le garage DECAHUD</h1>
-		<img src="/<?=WEBROOT2?>/webroot/image/photo.jpg">
-</div>
+<h1>Bienvenue chez le GARAGE NICOLAS</h1>
+
+	<div class="container">
+	  <img src="/<?=WEBROOT2?>/webroot/img/accueil.jpg">
+	</div>

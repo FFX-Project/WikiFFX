@@ -1,62 +1,99 @@
-<?php
+<?php 
 class categorys extends controller {
-
-	var $models = array("category");
-
+	
 	function index() {
-	//	echo "function index";
+		
+		//echo "méthode index de la classe category";
 		$d=array();
-	//	$d['cat']=array("nom"=>"Berline", 'ordre'=>1);
-	//	$this->category = $this->loadmodel('category');
-		$d['cats'] = $this->category->getLast();
-		$d['titre'] = "Liste des 6 dernières catégories";
-
+		// $d['cat'] = array (
+			// "nom"=>"berline",
+			// "ordre"=>"4"
+		// );
+		$this->loadModel('category');
+		
+		$d['cats'] =$this->category->getLast();
+		$d['titre'] ="Liste des 6 dernières catégories";
+		
+		
 		$this->set($d);
-		//je rend la vue index
+		
+		//on rend la vue --> index
 		$this->render('index');
 	}
-
-	function admincateg() {
-	//	echo "function index";
-		$d=array();
-	//	$d['cat']=array("nom"=>"Berline", 'ordre'=>1);
-	//	$this->category = $this->loadmodel('category');
-	if($this->Session->isLogged()) {
-			$d['cats'] = $this->category->getLast();
-			$d['titre'] = "administration des catégories";
+	
+	function adminIndex() {
+		
+		if ($this->Session->isLogged()){
+			$this->loadModel('category');
+			
+			$d['cats'] =$this->category->getLast(999);
+			$d['titre'] ="Administration catégories";
+			
+			
 			$this->set($d);
+			
 			$this->layout='admin';
-			//je rend la vue index
-			$this->render('admincateg');
+			//on rend la vue --> index
+			$this->render('adminIndex');
 		}
 	}
-
-	function view($id){
-	//	$this->category = $this->loadmodel('category');
-		$d['cat'] = $this->category->getCat($id);
-		$d['titre'] = "Détail catégories";
-
-		$this->set($d);
-		//je rend la vue view
-		$this->render('view');
-	}
-
-	function AdminDelete($id){
-		if($this->Session->IsLogged())
-		{
-			if(!$this->category->delete($id))
-			{
-			$this->Session->setFlash("Suppression impossible ! il y a des véhicules dans cette categ","danger");
+	
+	function adminEdit($id=null) {
+		
+		if ($this->Session->isLogged()){
+			$this->loadModel('category');
+			
+			$this->layout='admin';
+			if(!empty($_POST)) {
+				//on est en insert ou update et on affiche la liste
+				$this->category->save($_POST);
+				$this->Session->setFlash("Votre mise à jour a bien été prise en compte");
+				$d['cats']=$this->category->getLast();
+				$d['titre'] ="Administration catégories";
+				$this->set($d);
+				//on rend la vue --> adminindex
+				$this->render('adminIndex');
+			} else {
+				$d=array();
+				//on remplit le formualire et on l'affiche
+				//si id renseigné
+				if(!empty($id)) {
+					//on remplit form 
+					//on récupère les données de mon id
+					$d['cat'] =$this->category->getCat($id);
+					// echo "<PRE>";
+					// print_r($d['cat']); 
+					// echo "</PRE>";
+				}
+				$this->set($d);
+				//on rend la vue --> adminedit
+				$this->render('adminedit');
 			}
-			else
-			{
+			
+		}
+	}
+	
+	function adminDelete($id) {
+		
+		if ($this->Session->isLogged()){
+			$this->loadModel('category');
+			
+			if (!$this->category->deleteCat($id)) {
+				$this->Session->setFlash("Suppression impossible! il y a des vehicules dans cette catégorie","danger");
+			} else {
 				$this->Session->setFlash("Suppression effectuée","success");
 			}
- 		}
+			$d['cats'] =$this->category->getLast(999);
+			$d['titre'] ="Administration catégories";
+			
+			
+			$this->set($d);
+			
+			$this->layout='admin';
+			//on rend la vue --> index
+			$this->render('adminIndex');
+		}
 	}
-
-	function adminEdit($id=null) {
-
-	}
+	
 }
 ?>

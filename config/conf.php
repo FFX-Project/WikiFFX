@@ -4,7 +4,7 @@ class conf
   static $databases = array (
     'default' => array(
         'host' => 'localhost',
-        'database' => 'voiture',
+        'database' => 'mvcslam5',
         'login' => 'root',
         'password' => ''
     )

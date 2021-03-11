@@ -1,10 +1,15 @@
-    <div class="container">
-      <div class="row">
-          <h1>Bienvenue dans le back office du garage de chaud </h1>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <h3>Bonjour <?php echo $_SESSION['User']->prenom." ". $_SESSION['User']->nom;?></h3>
-        </div>
-      </div>
-    </div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Bienvenue</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5">
+			<form method="POST" action="/<?=WEBROOT2?>/users/logout">
+			<?php echo "Bonjour ".$_SESSION['User']->nom;?>
+			  <button type="submit" class="btn btn-primary">Se déconnecter</button>
+			</form>
+		</div>
+	</div>
+</div>

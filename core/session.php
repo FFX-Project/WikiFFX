@@ -1,19 +1,18 @@
 <?php
 class Session{
-
+    
     public function __construct() {
         if (!isset($_SESSION)){
             session_start();
         }
     }
-    //méthode pour affecter un message de session
     public function setFlash($message,$type = 'success') {
         $_SESSION['flash'] = array(
             'message'=> $message,
             'type' => $type
         );
     }
-    //afficher un message de session
+    
     public function flash() {
         if (isset($_SESSION['flash']['message'])){
            $html = '<div class="alert alert-'.$_SESSION['flash']['type'].'"><p>'. $_SESSION['flash']['message'].'</p></div>';
@@ -21,11 +20,9 @@ class Session{
            return $html;
         }
     }
-    //écrit une variable de session
    public function write($key, $value) {
        $_SESSION[$key] = $value;
    }
-   //effectue la lecture d'une variable de session
    public function read($key = null) {
        //debug($key);
        if($key){
@@ -38,12 +35,13 @@ class Session{
        } else {
            return $_SESSION;
        }
+           
    }
-   //retourne vrai si le nom de la perssone logger existe
+   //retourne le nom de la personne loguée
    public function isLogged() {
        return isset($_SESSION['User']->nom);
    }
-   //méthode pour lire la valeur du user
+   
    public function user($key) {
        if ($this->read('User')){
            if (isset($this->read('User')->$key)){
@@ -51,7 +49,7 @@ class Session{
            } else {
                return false;
            }
-
+           
        }
        return false;
    }

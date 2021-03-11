@@ -1,10 +1,10 @@
-<?php
+<?php 
 class accueil extends controller {
-
+	
 	function index() {
-
-		//je rend la vue accueil
+		//on rend la vue --> index
 		$this->render('index');
 	}
+	
 }
 ?>
