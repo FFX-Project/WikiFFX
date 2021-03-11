@@ -1,0 +1,12 @@
+Options +FollowSymlinks
+#on active la réécriture d'URL
+RewriteEngine on
+
+RewriteBase /SLAM52020MVC/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+#On prend TOUT et on le redirige vers index.php
+#p sera la page appelée
+RewriteRule ^([a-zA-Z0-9\-\_\/].*)$ index.php?p=$1
