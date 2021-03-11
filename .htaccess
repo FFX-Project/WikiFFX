@@ -2,7 +2,7 @@ Options +FollowSymlinks
 #on active la réécriture d'URL
 RewriteEngine on
 
-RewriteBase /SLAM52019MVC/
+RewriteBase /WikiFFX/
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
