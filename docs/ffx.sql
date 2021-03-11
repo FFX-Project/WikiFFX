@@ -6,6 +6,10 @@
 -- Généré le :  mer. 10 mars 2021 à 18:00
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
+DROP DATABASE IF EXISTS FFX;
+
+CREATE DATABASE IF NOT EXISTS FFX;
+USE FFX;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
