@@ -1,11 +1,12 @@
 <?php
-class vehicule extends Model {
+class monstre extends Model {
 
-	var $table = "vehicule";
+	var $table = "monstre";
 
 	function getAll($num=99){
 		return $this->find(array(
-			"order"=> 'prix DESC',
+			"inner"=> 'INNER JOIN page ON monstre.Id_Page = page.Id_Page',
+			"order"=> 'page.id_Page ASC',
 			"limit"=> 'LIMIT '. $num
 		));
 	}

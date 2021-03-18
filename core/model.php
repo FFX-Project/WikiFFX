@@ -145,7 +145,7 @@
 					' WHERE '.$condition.
 					' ORDER BY '.$order.
 					' '.$limit;
-			//echo $sql;
+			echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
