@@ -27,8 +27,10 @@
           Véhicules
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          
           <a class="dropdown-item" href="/<?=WEBROOT2?>/monstres">Les Monstres</a>
-          <a class="dropdown-item" href="/<?=WEBROOT2?>/marques">Par marque</a>
+           <a class="dropdown-item" href="/<?=WEBROOT2?>/locations">Lieux</a>
+
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/<?=WEBROOT2?>/vehicules">Liste complète </a>
         </div>
@@ -38,7 +40,7 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Connexion</button>
     </form>
   </div>
-</nav>  
+</nav>
 	<div class="container bg-light">
 		<?php
 			echo $this->Session->flash();
@@ -46,7 +48,7 @@
 	</div>
 	<div class="container">
 	  <!--<img src="/<?=WEBROOT2?>/webroot/img/logo.jpg">-->
-		
+
 	  <div class="row">
 		<div class="col-sm">
 		<?php
@@ -55,7 +57,7 @@
 
 		?>
 		</div>
-	  </div>		
+	  </div>
       <!-- FOOTER -->
       <footer class="container">
         <p class="float-right"><a href="#">Retour en haut</a></p>

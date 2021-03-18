@@ -6,7 +6,7 @@
 		public $table;
 		public $conf='default';
 		public $db;
-		
+
 		function __construct(){
 			//on fait appel à notre configuration bdd
 			$conf= conf::$databases[$this->conf];
@@ -22,14 +22,14 @@
 				die();
 			}
 		}
-		
+
 		//read : lecture d'une table par la clé primaire --> renvoie une seule ligne
 		function read($fields=null) {
 			if ($fields==null){
 				$fields="*";
 			}
 			/* Exécute une requête préparée en passant un tableau de valeurs */
-			$sql = 'SELECT '.$fields .' FROM '.$this->table.' WHERE id = :id';
+			$sql = 'SELECT '.$fields .' FROM '.$this->table.' WHERE id_Page = :id';
 			echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
@@ -48,7 +48,7 @@
 				echo "<br /> erreur SQL";
 			}
 		}
-		
+
 		//save : insertion ou une modification d'une ligne dans BDD
 		function save($data) {
 			//on vérifie si id existe
@@ -66,14 +66,14 @@
 					$values.=":".$key.",";
 				}
 				//enleve la denriere virgule
-				$sql = substr($sql, 0, -1); 
-				$values = substr($values, 0, -1); 
+				$sql = substr($sql, 0, -1);
+				$values = substr($values, 0, -1);
 				$sql.=") VALUES (".$values.")";
 
 				//echo $sql;
 				//préparation SQL
 				$sth = $this->db->prepare($sql);
-				
+
 				//exécution SQL
 				if ($sth->execute($data)) {
 					echo "insertion ok id :".$this->db->lastInsertId();
@@ -81,7 +81,7 @@
 				} else {
 					echo "<br /> erreur SQL";
 				}
-				
+
 			} else {
 				echo "update";
 				// echo "<PRE>";
@@ -96,32 +96,32 @@
 					$sql.=$key."= :".$key.",";
 				}
 				//enleve la denriere virgule
-				$sql = substr($sql, 0, -1); 
+				$sql = substr($sql, 0, -1);
 				$sql.=" WHERE id=".$this->id;
 
 				echo $sql;
 				//préparation SQL
 				$sth = $this->db->prepare($sql);
-				
+
 				//exécution SQL
 				if ($sth->execute($data)) {
 					echo "mise à jour ok ";
 				} else {
 					echo "<br /> erreur SQL";
 				}
-				
+
 			}
 		}
-		
+
 		//find : lecture d'une ou plusieurs table --> renvoie plusieurs lignes
 		function find($data) {
-			
+
 			$fields="*";
 			$inner=" ";
 			$condition="1=1";
 			$order="id";
 			$limit=" ";
-			
+
 			if (isset($data["fields"])){
 				$fields=$data["fields"];
 			}
@@ -137,7 +137,7 @@
 			if (isset($data["limit"])){
 				$limit=$data["limit"];
 			}
-			
+
 			/* Exécute une requête préparée en passant un tableau de valeurs */
 			$sql =	' SELECT '.$fields .
 					' FROM '.$this->table.
@@ -158,7 +158,7 @@
 			} else {
 				echo "<br /> erreur SQL";
 			}
-		}	
+		}
 
 		//findfirst : lecture du premier enreg d'un find
 		function findFirst($data) {
@@ -166,7 +166,7 @@
 			 //print_r($data);
 			 return current($this->find($data));
 		}
-		
+
 		//delete : on supprime une seule ligne sur clé primaire
 		function delete() {
 			/* Exécute une requête préparée en passant un tableau de valeurs */
@@ -182,7 +182,7 @@
 				//echo "<br /> erreur SQL";
 				return false;
 			}
-		}		
-		
+		}
+
 	}
 ?>

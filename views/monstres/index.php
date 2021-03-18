@@ -16,8 +16,7 @@
   </thead>
   <tbody>
 	<?php 
-	foreach ($mtrs as $m){
-		
+	foreach ($mtrs as $m){	
 		echo "<tr>";
 		echo '  <th scope="row">'.$m->Id_Page.'</th>';
 		echo '  <td>'.$m->Nom_Page.'</td>';
