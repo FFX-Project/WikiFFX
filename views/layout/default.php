@@ -27,7 +27,7 @@
           Véhicules
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/<?=WEBROOT2?>/categorys">Par catégorie</a>
+          <a class="dropdown-item" href="/<?=WEBROOT2?>/monstres">Les Monstres</a>
           <a class="dropdown-item" href="/<?=WEBROOT2?>/marques">Par marque</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/<?=WEBROOT2?>/vehicules">Liste complète </a>
