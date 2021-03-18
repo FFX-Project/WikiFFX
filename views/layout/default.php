@@ -22,19 +22,13 @@
       <li class="nav-item active">
         <a class="nav-link" href="/<?=WEBROOT2?>/">Accueil <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Véhicules
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          
-          <a class="dropdown-item" href="/<?=WEBROOT2?>/monstres">Les Monstres</a>
-           <a class="dropdown-item" href="/<?=WEBROOT2?>/locations">Lieux</a>
-
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/<?=WEBROOT2?>/vehicules">Liste complète </a>
-        </div>
+      <li class="nav-item active">
+        <a class="nav-link" href="/<?=WEBROOT2?>/monstres">Monstres <span class="sr-only"></span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/<?=WEBROOT2?>/locations">Lieux <span class="sr-only"></span></a>
+      </li>
+    
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/users/login">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Connexion</button>
