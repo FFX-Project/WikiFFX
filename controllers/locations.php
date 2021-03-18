@@ -1,5 +1,5 @@
 <?php
-class vehicules extends controller {
+class locations extends controller {
 
 	function index() {
 
@@ -9,10 +9,10 @@ class vehicules extends controller {
 			// "nom"=>"berline",
 			// "ordre"=>"4"
 		// );
-		$this->loadModel('vehicule');
+		$this->loadModel('location');
 
-		$d['vehs'] =$this->vehicule->getAll();
-		$d['titre'] ="Liste des véhicules";
+		$d['locs'] = $this->location->getAll();
+		$d['titre'] ="Liste des locations";
 
 
 		$this->set($d);

@@ -1,25 +1,13 @@
 <?php
-class vehicule extends Model {
+class location extends Model {
 
-	var $table = "vehicule";
+	var $table = "location";
 
 	function getAll($num=99){
 		return $this->find(array(
-			"order"=> 'prix DESC',
+			"inner"=> 'INNER JOIN page ON location.Id_Page = page.Id_Page',
+			"order"=> 'page.id_Page ASC',
 			"limit"=> 'LIMIT '. $num
-		));
-	}
-
-	function getDetail($id){
-		return $this->findFirst(array(
-			"fields"=> '	vehicule.*,
-							categorie.name as nomcateg,
-							libcouleur, metal,image,
-							libelle as libmarque  ',
-			"condition"=> 'vehicule.id ='.$id,
-			"inner"=> '	INNER JOIN	categorie ON vehicule.categorie = categorie.id
-						INNER JOIN	marque ON vehicule.marque = marque.id
-						INNER JOIN	couleur ON vehicule.couleur = couleur.id'
 		));
 	}
 
