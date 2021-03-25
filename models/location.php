@@ -11,13 +11,18 @@ class location extends Model {
 		));
 	}
 
-	function deleteVeh($id){
+	function deleteLoc($id){
 		$this->id=$id;
-		return $this->delete();
+		$this->delete(array("IdDel"=>"Id_Page"));
+		return $this->delete(array("from"=>"Page","IdDel"=>"Id_Page"));
 	}
 
 	function getImage($id){
 		return $this->findFirst(array("fields"=>'vehicule.image',"condition"=>'vehicule.id='.$id));
+	}
+
+	function getDetail($id){
+		return $this->findFirst(array("condition"=>"Id_Page=".$id,	"from"=> "Page", "order"=> "Id_Page"));
 	}
 }
 ?>

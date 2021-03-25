@@ -5,10 +5,7 @@ class locations extends controller {
 
 		//echo "méthode index de la classe category";
 		$d=array();
-		// $d['cat'] = array (
-			// "nom"=>"berline",
-			// "ordre"=>"4"
-		// );
+
 		$this->loadModel('location');
 
 		$d['locs'] = $this->location->getAll();
@@ -22,12 +19,10 @@ class locations extends controller {
 	}
 
 	function view($id) {
-		//echo "id vehicule".$id;
-		$this->loadModel('vehicule');
-
-		$d['veh'] =$this->vehicule->getDetail($id);
-		$d['titre'] ="Détail du véhicule n°".$id;
-
+		echo "id location ".$id;
+		$this->loadModel('location');
+		$d['loc'] = $this->location->getDetail($id);
+		$d['titre'] = $d['loc']->Nom_Page;
 		$this->set($d);
 
 		$this->render('view');
@@ -124,25 +119,20 @@ class locations extends controller {
 	}
 
 	function adminDelete($id) {
-
-		if ($this->Session->isLogged()){
-			$this->loadModel('vehicule');
-
-			if (!$this->vehicule->deleteVeh($id)) {
-
-			} else {
-				$this->Session->setFlash("Suppression effectuée","success");
-			}
-			$d['vehs'] =$this->vehicule->getLast(999);
-			$d['titre'] ="Administration Vehicules";
-
-
-			$this->set($d);
-
-			$this->layout='admin';
-			//on rend la vue --> index
-			$this->render('adminIndex');
+		$this->loadModel('location');
+		if (!$this->location->deleteLoc($id)) {
+				echo "C PAS BON";
+		} else {
+		echo "bravo";
 		}
+		$d['locs'] = $this->location->getAll();
+		$d['titre'] ="Liste des locations";
+
+
+		$this->set($d);
+
+		//on rend la vue --> index
+		$this->render('index');
 	}
 }
 ?>
