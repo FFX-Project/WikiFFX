@@ -1,18 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 10 mars 2021 à 18:00
--- Version du serveur :  5.7.26
--- Version de PHP :  7.2.18
+-- Généré le : jeu. 25 mars 2021 à 16:25
+-- Version du serveur :  5.7.31
+-- Version de PHP : 7.4.9
 DROP DATABASE IF EXISTS FFX;
 
 CREATE DATABASE IF NOT EXISTS FFX;
 USE FFX;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -23,7 +22,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `ffx`
+-- Base de données : `ffx`
 --
 
 -- --------------------------------------------------------
@@ -124,6 +123,14 @@ CREATE TABLE IF NOT EXISTS `location` (
   PRIMARY KEY (`Id_Page`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `location`
+--
+
+INSERT INTO `location` (`Id_Page`) VALUES
+(1),
+(2);
+
 -- --------------------------------------------------------
 
 --
@@ -149,6 +156,14 @@ CREATE TABLE IF NOT EXISTS `monstre` (
   PRIMARY KEY (`Id_Page`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `monstre`
+--
+
+INSERT INTO `monstre` (`Id_Page`, `Hp_Monstre`, `Accuracy_Monstre`, `Chance_Monstre`, `Defence_Monstre`, `DefenceMagique_Monstre`, `Agi_Monstre`, `Esquive_Monstre`, `Mp_Monstre`, `Force_Monstre`, `Magie_Monstre`, `Overkill_Monstre`, `Gil_Monstre`, `XP_Monstre`) VALUES
+(3, 1000, 2, 3, 4, 5, '6', '7', 8, 9, 10, 11, 12, 13),
+(4, 1, 1, 1, 1, 1, '1', '1', 1, 1, 1, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -165,6 +180,16 @@ CREATE TABLE IF NOT EXISTS `ont` (
   KEY `Id_Variante` (`Id_Variante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `ont`
+--
+
+INSERT INTO `ont` (`Id_Page`, `Id_Elementaire`, `Id_Variante`) VALUES
+(3, 1, 2),
+(4, 2, 1),
+(4, 2, 2),
+(3, 4, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -178,7 +203,17 @@ CREATE TABLE IF NOT EXISTS `page` (
   `Image_Page` varchar(50) DEFAULT NULL,
   `Description_Page` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id_Page`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `page`
+--
+
+INSERT INTO `page` (`Id_Page`, `Nom_Page`, `Image_Page`, `Description_Page`) VALUES
+(1, 'NOM DE LA PAGE', 'IMAGE', 'CESTLADESCRIPTIONHEHE'),
+(2, 'PAGE2', 'IMAGEOUI', 'AA'),
+(3, 'juliett', 'oui.jpg', 'le seul lunique 5head hiih'),
+(4, 'gwendall', 'gwen.jpp', 'ouihihi');
 
 -- --------------------------------------------------------
 
@@ -191,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `varianteelem` (
   `Id_Variante` int(11) NOT NULL AUTO_INCREMENT,
   `Nom_Variante` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id_Variante`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `varianteelem`
@@ -200,7 +235,8 @@ CREATE TABLE IF NOT EXISTS `varianteelem` (
 INSERT INTO `varianteelem` (`Id_Variante`, `Nom_Variante`) VALUES
 (1, 'Faible'),
 (2, 'Normal'),
-(3, 'Puissante');
+(3, 'Puissante'),
+(4, 'Immunisé');
 
 --
 -- Contraintes pour les tables déchargées

@@ -24,12 +24,15 @@
 		}
 
 		//read : lecture d'une table par la clé primaire --> renvoie une seule ligne
-		function read($fields=null) {
+		function read($fields=null, $condition=null) {
 			if ($fields==null){
 				$fields="*";
 			}
+			if($condition == null){
+				$condition = "Id_Page";
+			}
 			/* Exécute une requête préparée en passant un tableau de valeurs */
-			$sql = 'SELECT '.$fields .' FROM '.$this->table.' WHERE id_Page = :id';
+			$sql = 'SELECT '.$fields .' FROM '.$this->table.' WHERE '.$condition.' = :id';
 			echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
@@ -117,6 +120,7 @@
 		function find($data) {
 
 			$fields="*";
+			$from ="".$this->table."";
 			$inner=" ";
 			$condition="1=1";
 			$order="id";
@@ -124,6 +128,9 @@
 
 			if (isset($data["fields"])){
 				$fields=$data["fields"];
+			}
+			if(isset($data["from"])){
+				$from=$data["from"];
 			}
 			if (isset($data["inner"])){
 				$inner=$data["inner"];
@@ -140,12 +147,12 @@
 
 			/* Exécute une requête préparée en passant un tableau de valeurs */
 			$sql =	' SELECT '.$fields .
-					' FROM '.$this->table.
+					' FROM '.$from.
 					' '.$inner.
 					' WHERE '.$condition.
 					' ORDER BY '.$order.
 					' '.$limit;
-			echo $sql;
+		//	echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
@@ -168,9 +175,17 @@
 		}
 
 		//delete : on supprime une seule ligne sur clé primaire
-		function delete() {
+		function delete($data) {
+			$IdDel="id";
+			$from = $this->table;
+			if (isset($data["IdDel"])){
+				$IdDel=$data["IdDel"];
+			}
+			if (isset($data["from"])){
+				$from=$data["from"];
+			}
 			/* Exécute une requête préparée en passant un tableau de valeurs */
-			$sql = 'DELETE FROM '.$this->table.' WHERE id = :id';
+			$sql = 'DELETE FROM '.$from.' WHERE ' .$IdDel.' = :id';
 			echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
