@@ -2,6 +2,13 @@
 class locations extends controller {
 
 	function index() {
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
 
 		//echo "méthode index de la classe category";
 		$d=array();
@@ -19,6 +26,13 @@ class locations extends controller {
 	}
 
 	function view($id) {
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
 		echo "id location ".$id;
 		$this->loadModel('location');
 		$d['loc'] = $this->location->getDetail($id);
@@ -31,7 +45,7 @@ class locations extends controller {
 
 	function adminIndex() {
 
-		if ($this->Session->isLogged()){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('vehicule');
 
 			$d['vehs'] =$this->vehicule->getAll(999);
@@ -48,7 +62,7 @@ class locations extends controller {
 
 	function adminEdit($id=null) {
 
-		if ($this->Session->isLogged()){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('vehicule');
 			$this->loadModel('category');
 
@@ -119,11 +133,13 @@ class locations extends controller {
 	}
 
 	function adminDelete($id) {
-		$this->loadModel('location');
-		if (!$this->location->deleteLoc($id)) {
-				echo "C PAS BON";
-		} else {
-		echo "bravo";
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->loadModel('location');
+			if (!$this->location->deleteLoc($id)) {
+					echo "C PAS BON";
+			} else {
+			echo "bravo";
+			}
 		}
 		$d['locs'] = $this->location->getAll();
 		$d['titre'] ="Liste des locations";
@@ -133,6 +149,7 @@ class locations extends controller {
 
 		//on rend la vue --> index
 		$this->render('index');
+
 	}
 }
 ?>

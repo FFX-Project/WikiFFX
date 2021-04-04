@@ -2,7 +2,13 @@
 class monstres extends controller {
 
 	function index() {
-
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
 		//echo "méthode index de la classe category";
 		$d=array();
 		// $d['cat'] = array (
@@ -22,6 +28,13 @@ class monstres extends controller {
 	}
 
 	function view($id) {
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
 		//echo "id vehicule".$id;
 		$this->loadModel('vehicule');
 
@@ -36,7 +49,7 @@ class monstres extends controller {
 
 	function adminIndex() {
 
-		if ($this->Session->isLogged()){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('vehicule');
 
 			$d['vehs'] =$this->vehicule->getAll(999);
@@ -53,7 +66,7 @@ class monstres extends controller {
 
 	function adminEdit($id=null) {
 
-		if ($this->Session->isLogged()){
+			if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('vehicule');
 			$this->loadModel('category');
 
@@ -125,7 +138,7 @@ class monstres extends controller {
 
 	function adminDelete($id) {
 
-		if ($this->Session->isLogged()){
+			if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('vehicule');
 
 			if (!$this->vehicule->deleteVeh($id)) {
