@@ -6,8 +6,8 @@
 	</div>
 	<div class="row">
 		<div class="col-md-5">
-			<form method="POST" action="/<?=WEBROOT2?>/users/logout">
-			<?php echo "Bonjour ".$_SESSION['User']->nom;?>
+			<form method="POST" action="/<?=WEBROOT2?>/comptes/logout">
+			<?php echo "Bonjour ".$_SESSION['compte']->Pseudo_Compte;?>
 			  <button type="submit" class="btn btn-primary">Se déconnecter</button>
 			</form>
 		</div>

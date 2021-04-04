@@ -74,6 +74,10 @@ CREATE TABLE IF NOT EXISTS `compte` (
   PRIMARY KEY (`Id_Compte`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO compte VALUES
+(1,"admin","21232f297a57a5a743894a0e4a801fc3","5head@gmail.com",1),
+(2,"user","ee11cbb19052e40b07aac0ca060c23ee","abcdefg@gmail.com",0);
+
 -- --------------------------------------------------------
 
 --

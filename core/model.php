@@ -152,7 +152,7 @@
 					' WHERE '.$condition.
 					' ORDER BY '.$order.
 					' '.$limit;
-		//	echo $sql;
+			//echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
@@ -170,7 +170,7 @@
 		//findfirst : lecture du premier enreg d'un find
 		function findFirst($data) {
 			 //retourne l'élément courant du tableau
-			 //print_r($data);
+			// print_r($data);
 			 return current($this->find($data));
 		}
 
