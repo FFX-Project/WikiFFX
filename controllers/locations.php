@@ -33,7 +33,6 @@ class locations extends controller {
 		}else{
 			$this->layout='default';
 		}
-		echo "id location ".$id;
 		$this->loadModel('location');
 		$d['loc'] = $this->location->getDetail($id);
 		$d['titre'] = $d['loc']->Nom_Page;
@@ -46,10 +45,10 @@ class locations extends controller {
 	function adminIndex() {
 
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
-			$this->loadModel('vehicule');
+			$this->loadModel('location');
 
-			$d['vehs'] =$this->vehicule->getAll(999);
-			$d['titre'] ="Administration Vehicules";
+			$d['locs'] =$this->location->getAll();
+			$d['titre'] ="Administration locations";
 
 
 			$this->set($d);
@@ -63,36 +62,35 @@ class locations extends controller {
 	function adminEdit($id=null) {
 
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
-			$this->loadModel('vehicule');
-			$this->loadModel('category');
-
+			$this->loadModel('location');
 			$this->layout='admin';
 			if(!empty($_POST)) {
 				//on est en insert ou update et on affiche la liste
 				//print_r($_FILES);
+				//print_r($_POST);
 				//si fichier à télécharger renseigné
 				if(!empty($_FILES['fichier']['name']))
 				{
 					//on vérifie les extensions autorisées
-					$tabext=array('jpg','png','jpeg');
+					$tabext=array('jpg','png','jpeg','webp');
 					$extension=pathinfo($_FILES['fichier']['name'],PATHINFO_EXTENSION);
 					if (in_array(strtolower($extension),$tabext))
 					{
 						if(isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK===$_FILES['fichier']['error'])
 						{
-							$nomimage=$_POST['name'].'.'.$extension;
+							$nomimage=$_POST['Nom_Page'].'.'.$extension;
 							if (empty($_POST['id'])) {
 								//on est en ajout
 							} else {
 								//on est en modif
-								$v=$this->vehicule->getImage($_POST['id']);
-								unlink('./webroot/img/'.$v->image);
+								$l=$this->location->getImage($_POST['id']);
+								unlink('./webroot/img/'.$l->Image_Page);
 							}
 							//on télécharge le fichier avec move_uploaded_file
 							if(move_uploaded_file($_FILES['fichier']['tmp_name'],'./webroot/img/'.$nomimage))
 							{
 								//on renseigne $_POST image pour le save
-								$_POST['image']=$nomimage;
+								$_POST['Image_Page']=$nomimage;
 								echo "Upload réussi";
 							}
 							else{
@@ -102,26 +100,31 @@ class locations extends controller {
 					}
 				}
 				unset($_POST['fichier']);
-				$this->vehicule->save($_POST);
+				print_r($_POST);
+				$nom = $_POST['Nom_Page'];
+				$from = "page";
+				$Nid = "Id_Page";
+				if (empty($_POST['id'])) {
+					$this->location->addLoc($_POST,$from,$Nid);
+				} else {
+					$this->location->save($_POST,$from,$Nid);
+				}
 				$this->Session->setFlash("Votre mise à jour a bien été prise en compte");
-				$d['vehs']=$this->vehicule->getAll(999);
-				$d['titre'] ="Administration des Vehicules";
+				$d['locs']=$this->location->getAll();
+				$d['titre'] ="Administration des locations";
 				$this->set($d);
 				//on rend la vue --> adminindex
 				$this->render('adminIndex');
 			} else {
 				$d=array();
-				//on remplit le formualire et on l'affiche
-				//si id renseigné
-				$d['cats'] =$this->category->getLast(999);
 
 				if(!empty($id)) {
 					//on remplit form
 					//on récupère les données de mon id
-					$d['veh'] =$this->vehicule->getDetail($id);
-					$d['titre'] ="Administration des vehicules";
+					$d['loc'] =$this->location->getDetail($id);
+					$d['titre'] ="Administration des locations";
 					// echo "<PRE>";
-					// print_r($d['cat']);
+					// print_r($d['loc']);
 					// echo "</PRE>";
 				}
 				$this->set($d);
@@ -140,16 +143,11 @@ class locations extends controller {
 			} else {
 			echo "bravo";
 			}
-		}
 		$d['locs'] = $this->location->getAll();
 		$d['titre'] ="Liste des locations";
-
-
 		$this->set($d);
-
-		//on rend la vue --> index
-		$this->render('index');
-
+		$this->render('adminIndex');
+		}
 	}
 }
 ?>
