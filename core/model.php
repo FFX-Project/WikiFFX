@@ -39,9 +39,9 @@
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
 			if ($sth->execute(array(':id' => $this->id))) {
 				$data = $sth->fetch(PDO::FETCH_OBJ);
-				echo "<PRE>";
-				print_r($data);
-				echo "</PRE>";
+			//	echo "<PRE>";
+			//	print_r($data);
+			//	echo "</PRE>";
 				foreach ($data as $key=>$value) {
 					//on peut créer "à la volée" les propriété de la classe
 					$this->$key = $value;
@@ -53,7 +53,15 @@
 		}
 
 		//save : insertion ou une modification d'une ligne dans BDD
-		function save($data) {
+		function save($data,$from=null, $Nid=null) {
+			//Si la talbe n'est pas celle de la classe appeller
+			if($from == null){
+				$from ="".$this->table."";
+			}
+			//Permet de modifier l'id des updates si elle ne ce nomme pas id.
+			if($Nid == null) {
+				$Nid = "id";
+			}
 			//on vérifie si id existe
 			if (empty($data["id"])){
 				//echo "insert";
@@ -62,7 +70,7 @@
 				// print_r($data);
 				// echo "</PRE>";
 				//construction requete SQL
-				$sql="INSERT INTO ".$this->table."(";
+				$sql="INSERT INTO ".$from."(";
 				$values="";
 				foreach ($data as $key => $value) {
 					$sql.=$key.",";
@@ -93,16 +101,16 @@
 				$this->id=$data['id'];
 				unset($data['id']);
 				//construction requete SQL
-				$sql="UPDATE ".$this->table." SET ";
+				$sql="UPDATE ".$from." SET ";
 				//$values="";
 				foreach ($data as $key => $value) {
 					$sql.=$key."= :".$key.",";
 				}
 				//enleve la denriere virgule
 				$sql = substr($sql, 0, -1);
-				$sql.=" WHERE id=".$this->id;
+				$sql.=" WHERE ".$Nid."=".$this->id;
 
-				echo $sql;
+				//echo $sql;
 				//préparation SQL
 				$sth = $this->db->prepare($sql);
 
@@ -123,7 +131,7 @@
 			$from ="".$this->table."";
 			$inner=" ";
 			$condition="1=1";
-			$order="id";
+			$order="id_Page";
 			$limit=" ";
 
 			if (isset($data["fields"])){
@@ -170,7 +178,7 @@
 		//findfirst : lecture du premier enreg d'un find
 		function findFirst($data) {
 			 //retourne l'élément courant du tableau
-			// print_r($data);
+		 	 //print_r($data);
 			 return current($this->find($data));
 		}
 
@@ -198,6 +206,35 @@
 				return false;
 			}
 		}
+		//Ajout du contenu hors table page
+		function addContenu($data){
+			 //echo "<PRE>";
+			 //print_r($data);
+			 //echo "</PRE>";
+			 unset($data['id']);
+			//construction requete SQL
+			$sql="INSERT INTO ".$this->table."(";
+			$values="";
+			foreach ($data as $key => $value) {
+				$sql.=$key.",";
+				$values.=":".$key.",";
+			}
+			//enleve la denriere virgule
+			$sql = substr($sql, 0, -1);
+			$values = substr($values, 0, -1);
+			$sql.=") VALUES (".$values.")";
 
+			echo $sql;
+			//préparation SQL
+			$sth = $this->db->prepare($sql);
+
+			//exécution SQL
+			if ($sth->execute($data)) {
+				echo "insertion ok id :".$this->db->lastInsertId();
+				$this->id=$this->db->lastInsertId();
+			} else {
+				echo "<br /> erreur SQL";
+			}
+		}
 	}
 ?>
