@@ -66,8 +66,10 @@ class locations extends controller {
 			$this->layout='admin';
 			if(!empty($_POST)) {
 				//on est en insert ou update et on affiche la liste
-				//print_r($_FILES);
-				//print_r($_POST);
+				print_r ('<pre>');
+				print_r($_FILES);
+				print_r ('</pre>');
+				print_r($_POST);
 				//si fichier à télécharger renseigné
 				if(!empty($_FILES['fichier']['name']))
 				{
@@ -78,7 +80,7 @@ class locations extends controller {
 					{
 						if(isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK===$_FILES['fichier']['error'])
 						{
-							$nomimage=$_POST['Nom_Page'].'.'.$extension;
+							$nomimage=$this->location->getTable().'_'.$_POST['id'].'.'.$extension;
 							if (empty($_POST['id'])) {
 								//on est en ajout
 							} else {

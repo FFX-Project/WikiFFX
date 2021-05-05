@@ -22,11 +22,18 @@ class item_clef extends Model {
 	}
 
 	function getDetail($id){
-		return $this->findFirst(array("condition"=>"Id_Page=".$id,	"from"=> "Page", "order"=> "Id_Page"));
+		return $this->findFirst(array(
+			"condition"=>"page.Id_Page=".$id,
+			"inner"=>"INNER JOIN page ON item_clef.Id_Page = page.Id_Page",
+			 "order"=> "page.Id_Page"));
 	}
 
 	function getId($nom){
 		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"Page", "order"=> "Id_Page"));
+	}
+
+	function getTable(){
+		return $this->table;
 	}
 
 	function addIC($data,$from=null, $Nid=null){
