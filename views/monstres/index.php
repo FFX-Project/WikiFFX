@@ -19,9 +19,9 @@
 	foreach ($mtrs as $m){	
 		echo "<tr>";
 		echo '  <th scope="row">'.$m->Id_Page.'</th>';
-		echo '  <td>'.$m->Nom_Page.'</td>';
-		echo '  <td>'.$m->Image_Page.'</td>';
+		echo '  <td><a href="/'.WEBROOT2.'/monstres/view/'.$m->Id_Page.'">'.$m->Nom_Page.'</td>';
 		echo '  <td>'.$m->Description_Page.'</td>';
+		echo '  <td></td>';
 		echo '  <td></td>';
 		echo '</tr>';
 	}
