@@ -100,8 +100,8 @@ class locations extends controller {
 					}
 				}
 				unset($_POST['fichier']);
-				print_r($_POST);
-				$nom = $_POST['Nom_Page'];
+				//print_r($_POST);
+				//$nom = $_POST['Nom_Page'];
 				$from = "page";
 				$Nid = "Id_Page";
 				if (empty($_POST['id'])) {

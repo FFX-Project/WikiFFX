@@ -33,6 +33,12 @@
       <li class="nav-item active">
         <a class="nav-link" href="/<?=WEBROOT2?>/locations/adminIndex">Admin Lieux <span class="sr-only"></span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs">Items clefs <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs/adminIndex">Admin Items clefs <span class="sr-only"></span></a>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/comptes/logout">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Déconnexion</button>

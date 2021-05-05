@@ -1,11 +1,11 @@
 <?php
-class location extends Model {
+class item_clef extends Model {
 
-	var $table = "location";
+	var $table = "item_clef";
 
 	function getAll($num=999){
 		return $this->find(array(
-			"inner"=> 'INNER JOIN page ON location.Id_Page = page.Id_Page',
+			"inner"=> 'INNER JOIN page ON item_clef.Id_Page = page.Id_Page',
 			"order"=> 'page.id_Page ASC',
 			"limit"=> 'LIMIT '. $num
 		));
@@ -29,16 +29,7 @@ class location extends Model {
 		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"Page", "order"=> "Id_Page"));
 	}
 
-	function getLoc($id){
-		return $this->findFirst(array(
-			"fields"=>"Nom_Page",
-			"from"=>"Page",
-			"where"=>"Id_Page =".$id,
-			"order"=>"page.id_Page ASC"
-		));
-	}
-
-	function addLoc($data,$from=null, $Nid=null){
+	function addIC($data,$from=null, $Nid=null){
 		//Si la talbe n'est pas celle de la classe appeller
 		if($from == null){
 			$from ="".$this->table."";
