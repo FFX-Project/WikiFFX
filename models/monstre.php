@@ -21,10 +21,19 @@ class monstre extends Model {
 
 	function getDetailElementaire($id){
 		return $this->find(array(
-			"fields"=> 'elementaire.Nom_Elementaire, varianteelem.Nom_Variante',
-			"inner"=> 'INNER JOIN ont ON monstre.Id_Page = ont.Id_Page INNER JOIN elementaire ON ont.Id_Elementaire = elementaire.Id_Elementaire INNER JOIN varianteelem ON ont.Id_Variante = varianteelem.Id_Variante',
-			"order"=> 'ont.Id_Elementaire ASC',
-			"condition"=> 'monstre.Id_Page ='.$id
+			"fields" => 'elementaire.Nom_Elementaire, varianteelem.Nom_Variante',
+			"inner" => 'INNER JOIN ont ON monstre.Id_Page = ont.Id_Page INNER JOIN elementaire ON ont.Id_Elementaire = elementaire.Id_Elementaire INNER JOIN varianteelem ON ont.Id_Variante = varianteelem.Id_Variante',
+			"order" => 'ont.Id_Elementaire ASC',
+			"condition" => 'monstre.Id_Page ='.$id
+		));
+	}
+
+	function getDetailLieux($id){
+		return $this->find(array(
+			"fields" => 'page.Id_Page, page.Nom_Page',
+			"inner" => 'INNER JOIN a ON monstre.Id_Page = a.Id_Page INNER JOIN location ON a.Id_Page_1 = location.Id_Page INNER JOIN page ON location.Id_Page = page.Id_Page',
+			"order" => 'page.id_Page ASC',
+			"condition" => 'monstre.Id_Page ='.$id
 		));
 	}
 

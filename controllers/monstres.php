@@ -35,16 +35,21 @@ class monstres extends controller {
 		}else{
 			$this->layout='default';
 		}
-		//echo "id monstre".$id;
 		$this->loadModel('monstre');
 
 		$d['mtr'] = $this->monstre->getDetail($id);
 		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);
+		$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
 
 		foreach ($d['mtrelem'] as $ele)
 		{
 			$nom = $ele->Nom_Elementaire;
 			$d['mtr']->$nom = $ele->Nom_Variante;
+		}
+
+		foreach ($d['mtrlieu'] as $lieu)
+		{
+			$d['mtr']->lieux[$lieu->Id_Page] = $lieu->Nom_Page;
 		}
 
 		$this->set($d);	
