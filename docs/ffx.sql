@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   `Id_Page` int(11) NOT NULL AUTO_INCREMENT,
   `Nom_Page` varchar(50) DEFAULT NULL,
   `Image_Page` varchar(50) DEFAULT NULL,
-  `Description_Page` varchar(50) DEFAULT NULL,
+  `Description_Page` TEXT DEFAULT NULL,
   PRIMARY KEY (`Id_Page`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
