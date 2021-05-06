@@ -16,8 +16,7 @@ class locations extends controller {
 		$this->loadModel('location');
 
 		$d['locs'] = $this->location->getAll();
-		$d['titre'] ="Liste des locations";
-
+		$d['titre'] = "Liste des localisation";
 
 		$this->set($d);
 
@@ -35,7 +34,6 @@ class locations extends controller {
 		}
 		$this->loadModel('location');
 		$d['loc'] = $this->location->getDetail($id);
-		$d['titre'] = $d['loc']->Nom_Page;
 		$this->set($d);
 
 		$this->render('view');
@@ -56,6 +54,9 @@ class locations extends controller {
 			$this->layout='admin';
 			//on rend la vue --> index
 			$this->render('adminIndex');
+		}
+		else {
+			echo '<img src="https://media1.tenor.com/images/01e14f3bdd80e2048bb87b7e22c9faad/tenor.gif?itemid=15977955">';
 		}
 	}
 
