@@ -1,7 +1,7 @@
 <?php
-	 echo "<PRE>";
-	 print_r($loc);
-	 echo "</PRE>";
+	 //echo "<PRE>";
+	 //print_r($item_clef);
+	 //echo "</PRE>";
 ?>
 	<div class="row">
 		<div class="col-md-12">
@@ -11,9 +11,10 @@
 	<div class="row">
 		<div class="col-md-12">
 			<br/><br/>
-			Location : <?php echo $loc->Nom_Page ?> <br/>
-			Image : <?php echo $loc->Image_Page  ?> <br/>
-			Description : <?php echo $loc->Description_Page ?>
-
+			Id : <?php echo $item_clef->Id_Page ?> <br/>
+			Nom : <?php echo $item_clef->Nom_Page ?> <br/>
+			Image : <?php echo $item_clef->Image_Page ?> <br/>
+			description : <?php echo $item_clef->Description_Page ?> <br/>
+			Nom location : <?php echo $item_clef->nom_location ?> <br/>
 		</div>
 	</div>

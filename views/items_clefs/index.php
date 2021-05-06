@@ -1,9 +1,4 @@
 <h1><?=$titre?></h1>
-<?php
-	echo "<PRE>";
-	print_r($items_clefs);
-	echo "</PRE>";
-?>
 <table class="table table-hover">
   <thead>
     <tr>
