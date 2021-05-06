@@ -9,10 +9,7 @@ class locations extends controller {
 		}else{
 			$this->layout='default';
 		}
-
-		//echo "méthode index de la classe category";
 		$d=array();
-
 		$this->loadModel('location');
 
 		$d['locs'] = $this->location->getAll();
@@ -66,10 +63,6 @@ class locations extends controller {
 			$this->layout='admin';
 			if(!empty($_POST)) {
 				//on est en insert ou update et on affiche la liste
-				print_r ('<pre>');
-				print_r($_FILES);
-				print_r ('</pre>');
-				print_r($_POST);
 				//si fichier à télécharger renseigné
 				if(!empty($_FILES['fichier']['name']))
 				{
@@ -102,8 +95,7 @@ class locations extends controller {
 					}
 				}
 				unset($_POST['fichier']);
-				//print_r($_POST);
-				//$nom = $_POST['Nom_Page'];
+				print_r($_POST);
 				$from = "page";
 				$Nid = "Id_Page";
 				if (empty($_POST['id'])) {
@@ -122,12 +114,9 @@ class locations extends controller {
 
 				if(!empty($id)) {
 					//on remplit form
-					//on récupère les données de mon id
+					//on récupère les données via id
 					$d['loc'] =$this->location->getDetail($id);
 					$d['titre'] ="Administration des locations";
-					// echo "<PRE>";
-					// print_r($d['loc']);
-					// echo "</PRE>";
 				}
 				$this->set($d);
 				//on rend la vue --> adminedit
@@ -144,6 +133,7 @@ class locations extends controller {
 					echo "C PAS BON";
 			} else {
 			echo "bravo";
+			$this->layout='admin';
 			}
 		$d['locs'] = $this->location->getAll();
 		$d['titre'] ="Liste des locations";

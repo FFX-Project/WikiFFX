@@ -98,8 +98,6 @@ class items_clefs extends controller {
 			$this->layout='admin';
 			if(!empty($_POST)) {
 				//on est en insert ou update et on affiche la liste
-				//print_r($_FILES);
-				//print_r($_POST);
 				//si fichier à télécharger renseigné
 				if(!empty($_FILES['fichier']['name']))
 				{
@@ -132,14 +130,12 @@ class items_clefs extends controller {
 					}
 				}
 				unset($_POST['fichier']);
-				//print_r($_POST);
-				//$nom = $_POST['Nom_Page'];
 				$from = "page";
 				$Nid = "Id_Page";
 				if (empty($_POST['id'])) {
-					$this->item_clef->addLoc($_POST,$from,$Nid);
+					$this->item_clef->addIC($_POST,$from,$Nid);
 				} else {
-					$this->item_clef->save($_POST,$from,$Nid);
+					$this->item_clef->UpdateIC($_POST,$from,$Nid);
 				}
 				$this->Session->setFlash("Votre mise à jour a bien été prise en compte");
 				$d['items_clefs'] = $this->item_clef->getAll();
@@ -159,12 +155,11 @@ class items_clefs extends controller {
 				$this->render('adminIndex');
 			} else {
 				$d=array();
-
+					$d['location'] = $this->location->getAll();
 				if(!empty($id)) {
 					//on remplit form
 					//on récupère les données de mon id
 					$d['item_clef'] = $this->item_clef->getDetail($id);
-					$d['location'] = $this->location->getAll();
 
 						foreach($d['location'] as $l){
 							if($d['item_clef']->Id_Location == $l->Id_Page){
@@ -173,9 +168,6 @@ class items_clefs extends controller {
 							}
 						}
 					$d['titre'] ="Administration des items_clefs";
-					// echo "<PRE>";
-					// print_r($d['loc']);
-					// echo "</PRE>";
 				}
 				$this->set($d);
 				//on rend la vue --> adminedit
@@ -188,16 +180,28 @@ class items_clefs extends controller {
 	function adminDelete($id) {
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('item_clef');
+			$this->loadModel('location');
 			if (!$this->item_clef->deleteLoc($id)) {
 					echo "C PAS BON";
 			} else {
 			echo "bravo";
+			$d['titre'] ="Administration items clefs";
+			$this->layout='admin';
 			}
-		$d['locs'] = $this->item_clef->getAll();
-		$d['titre'] ="Liste des locations";
-		$this->set($d);
-		$this->render('adminIndex');
+			$d['items_clefs'] = $this->item_clef->getAll();
+			$d['location'] = $this->location->getAll();
+
+			foreach($d['items_clefs'] as $i){
+				foreach($d['location'] as $l){
+					if($i->Id_Location == $l->Id_Page){
+						//ajout du nom de la location dans l'objet items_clefs
+						$i->nom_location = $l->Nom_Page;
+					}
+				}
+			}
+		 $this->set($d);
+	 	 $this->render('adminIndex');
 		}
-	}
+	 }
 	}
 	?>
