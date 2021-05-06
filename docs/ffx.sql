@@ -1,17 +1,19 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 25 mars 2021 à 16:25
--- Version du serveur :  5.7.31
--- Version de PHP : 7.4.9
+-- Généré le :  jeu. 06 mai 2021 à 12:31
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.2.18
 DROP DATABASE IF EXISTS FFX;
 
 CREATE DATABASE IF NOT EXISTS FFX;
 USE FFX;
 
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -22,7 +24,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `ffx`
+-- Base de données :  `ffx`
 --
 
 -- --------------------------------------------------------
@@ -72,11 +74,15 @@ CREATE TABLE IF NOT EXISTS `compte` (
   `Email_Compte` varchar(255) DEFAULT NULL,
   `Droit_Compte` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id_Compte`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-INSERT INTO compte VALUES
-(1,"admin","21232f297a57a5a743894a0e4a801fc3","5head@gmail.com",1),
-(2,"user","ee11cbb19052e40b07aac0ca060c23ee","abcdefg@gmail.com",0);
+--
+-- Déchargement des données de la table `compte`
+--
+
+INSERT INTO `compte` (`Id_Compte`, `Pseudo_Compte`, `Mdp_Compte`, `Email_Compte`, `Droit_Compte`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '5head@gmail.com', 1),
+(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'abcdefg@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -114,6 +120,14 @@ CREATE TABLE IF NOT EXISTS `item_clef` (
   PRIMARY KEY (`Id_Page`),
   KEY `Id_Location` (`Id_Location`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `item_clef`
+--
+
+INSERT INTO `item_clef` (`Id_Page`, `Id_Location`) VALUES
+(5, 1),
+(6, 1);
 
 -- --------------------------------------------------------
 
@@ -205,19 +219,25 @@ CREATE TABLE IF NOT EXISTS `page` (
   `Id_Page` int(11) NOT NULL AUTO_INCREMENT,
   `Nom_Page` varchar(50) DEFAULT NULL,
   `Image_Page` varchar(50) DEFAULT NULL,
-  `Description_Page` TEXT DEFAULT NULL,
+  `Description_Page` text,
   PRIMARY KEY (`Id_Page`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `page`
 --
 
 INSERT INTO `page` (`Id_Page`, `Nom_Page`, `Image_Page`, `Description_Page`) VALUES
-(1, 'NOM DE LA PAGE', 'IMAGE', 'CESTLADESCRIPTIONHEHE'),
-(2, 'PAGE2', 'IMAGEOUI', 'AA'),
+(1, 'NOM DE LA PAGE', 'NOM DE LA PAGE.webp', 'CESTLADESCRIPTIONH'),
+(2, 'besaid mabite', 'location_2.webp', 'AAdzedzda dza'),
 (3, 'juliett', 'oui.jpg', 'le seul lunique 5head hiih'),
-(4, 'gwendall', 'gwen.jpp', 'ouihihi');
+(4, 'gwendall', 'gwen.jpp', 'ouihihi'),
+(5, 'manuel albed', 'item_clef_5.webp', 'l\'alphabet quoi merde'),
+(6, 'a', 'item_clef_6.webp', 'dadada'),
+(10, 'dzadza', 'item_clef_.webp', 'dzadaz'),
+(11, 'dzadza', 'item_clef_.webp', 'dzadaz'),
+(12, 'gre', 'item_clef_.webp', 'rge'),
+(13, 'gre', 'item_clef_.webp', 'rge');
 
 -- --------------------------------------------------------
 
