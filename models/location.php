@@ -29,6 +29,10 @@ class location extends Model {
 		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"page", "order"=> "Id_Page"));
 	}
 
+	function getTable(){
+		return $this->table;
+	}
+//récupère la localisation
 	function getLoc($id){
 		return $this->findFirst(array(
 			"fields"=>"Nom_Page",

@@ -109,8 +109,9 @@
 				//enleve la denriere virgule
 				$sql = substr($sql, 0, -1);
 				$sql.=" WHERE ".$Nid."=".$this->id;
-
-				//echo $sql;
+				echo "<pre>";
+				echo $sql;
+				echo "</pre>";
 				//préparation SQL
 				$sth = $this->db->prepare($sql);
 
