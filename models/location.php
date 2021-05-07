@@ -14,19 +14,19 @@ class location extends Model {
 	function deleteLoc($id){
 		$this->id=$id;
 		$this->delete(array("IdDel"=>"Id_Page"));
-		return $this->delete(array("from"=>"Page","IdDel"=>"Id_Page"));
+		return $this->delete(array("from"=>"page","IdDel"=>"Id_Page"));
 	}
 
 	function getImage($id){
-		return $this->findFirst(array("fields"=>'Page.Image_Page', "from"=>'Page',"condition"=>'Id_Page='.$id));
+		return $this->findFirst(array("fields"=>'page.Image_Page', "from"=>'page',"condition"=>'Id_Page='.$id));
 	}
 
 	function getDetail($id){
-		return $this->findFirst(array("condition"=>"Id_Page=".$id,	"from"=> "Page", "order"=> "Id_Page"));
+		return $this->findFirst(array("condition"=>"Id_Page=".$id,	"from"=> "page", "order"=> "Id_Page"));
 	}
 
 	function getId($nom){
-		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"Page", "order"=> "Id_Page"));
+		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"page", "order"=> "Id_Page"));
 	}
 
 	function getTable(){
@@ -36,7 +36,7 @@ class location extends Model {
 	function getLoc($id){
 		return $this->findFirst(array(
 			"fields"=>"Nom_Page",
-			"from"=>"Page",
+			"from"=>"page",
 			"where"=>"Id_Page =".$id,
 			"order"=>"page.id_Page ASC"
 		));

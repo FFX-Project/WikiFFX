@@ -33,7 +33,7 @@
 			}
 			/* Exécute une requête préparée en passant un tableau de valeurs */
 			$sql = 'SELECT '.$fields .' FROM '.$this->table.' WHERE '.$condition.' = :id';
-			echo $sql;
+			//echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
@@ -161,7 +161,7 @@
 					' WHERE '.$condition.
 					' ORDER BY '.$order.
 					' '.$limit;
-			echo $sql;
+			//echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
@@ -195,7 +195,7 @@
 			}
 			/* Exécute une requête préparée en passant un tableau de valeurs */
 			$sql = 'DELETE FROM '.$from.' WHERE ' .$IdDel.' = :id';
-			echo $sql;
+			//echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
@@ -225,7 +225,7 @@
 			$values = substr($values, 0, -1);
 			$sql.=") VALUES (".$values.")";
 
-			echo $sql;
+			//echo $sql;
 			//préparation SQL
 			$sth = $this->db->prepare($sql);
 
