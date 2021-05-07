@@ -1,9 +1,5 @@
-<h1><?=$titre?></h1>
-<?php
-	/*echo "<PRE>";
-	print_r($mtrs); 
-	echo "</PRE>";*/
-?>
+<h2><?=$titre?></h2>
+
 <div class="row">
 <?php 
 foreach ($mtrs as $m){
