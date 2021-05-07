@@ -39,9 +39,9 @@
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
 			if ($sth->execute(array(':id' => $this->id))) {
 				$data = $sth->fetch(PDO::FETCH_OBJ);
-			//	echo "<PRE>";
-			//	print_r($data);
-			//	echo "</PRE>";
+				echo "<PRE>";
+				print_r($data);
+				echo "</PRE>";
 				foreach ($data as $key=>$value) {
 					//on peut créer "à la volée" les propriété de la classe
 					$this->$key = $value;
@@ -167,9 +167,9 @@
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
 			if ($sth->execute()) {
 				$d = $sth->fetchAll(PDO::FETCH_OBJ);
-				// echo "<PRE>";
-				// print_r($d);
-				// echo "</PRE>";
+				/*echo "<PRE>";
+				print_r($d);
+				echo "</PRE>";*/
 				return $d;
 			} else {
 				echo "<br /> erreur SQL";
