@@ -5,7 +5,7 @@
 ?>
 	<div class="row">
 		<div class="col-md-12">
-			<h2><u>Localisation : <?=$loc->Nom_Page?></u></h2>
+			<h2><u><?=$loc->Nom_Page?></u></h2>
 		</div>
 	</div>
 	<div class="row">

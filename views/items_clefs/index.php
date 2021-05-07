@@ -1,28 +1,13 @@
-<h1><?=$titre?></h1>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">Nom_Page</th>
-      <th scope="col">Image_Page</th>
-      <th scope="col">Nom location</th>
-      <th scope="col">Description</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-	<?php
-	foreach ($items_clefs as $ic){
+<h2><?=$titre?></h2>
 
-		echo "<tr>";
-		echo '  <th scope="row">'.$ic->Id_Page.'</th>';
-		echo '  <td><a href="/'.WEBROOT2.'/items_clefs/view/'.$ic->Id_Page.'">'.$ic->Nom_Page.'</a></td>';
-		echo '  <td><img src="/'.WEBROOT2.'/webroot/img/'.$ic->Image_Page.'" width="100" /></td>';
-    echo '   <td><a href="/'.WEBROOT2.'/locations/view/'.$ic->Id_Location.'">'.$ic->nom_location.'</td>';
-		echo '  <td>'.$ic->Description_Page.'</td>';
-		echo '  <td></td>';
-		echo '</tr>';
-	}
-	?>
-  </tbody>
-</table>
+<div class="row">
+<?php 
+foreach ($items_clefs as $ic){
+	echo '<div class="col-sm"><div class="card" style="width: 18rem;">';
+	echo '<div class="card-header">'.$ic->Nom_Page.'</div><img src="/'.WEBROOT2.'/webroot/img/'.$ic->Image_Page.'" class="card-img-top" alt="'.$ic->Nom_Page.' picture">
+		<div class="card-body">';
+	echo '<a href="/'.WEBROOT2.'/items_clefs/view/'.$ic->Id_Page.'" class="btn btn-primary">Voir en détails</a></div>';
+	echo '</div></div>';	
+}
+?>
+</div>
