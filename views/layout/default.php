@@ -34,6 +34,11 @@
         <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs">Items clefs <span class="sr-only"></span></a>
       </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/search/">
+      <input class="form-control mr-sm-2" name="q" type="search" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>" placeholder="Recherche..." aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">🔍</button>
+    </form>
+    <div>&nbsp;</div>
     <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/comptes/">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Connexion</button>
     </form>
@@ -56,14 +61,15 @@
 		?>
 		</div>
 	  </div>
+
       <!-- FOOTER -->
       <footer class="container">
         <hr>
         <div class="float-right"><a href="#">Retour en haut</a></div>
         <p>FFX Wiki &copy; 2020-2021 Echo Golf & Juliett Delta Inc,</p>
       </footer>
-	</div>
 
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
