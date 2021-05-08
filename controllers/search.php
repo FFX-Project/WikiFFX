@@ -37,7 +37,7 @@ class search extends controller {
 		else
 		{
 			$d['titre'] = "Merci de faire une vraie recherche";
-			$d['error'] = "https://streamscheme.com/wp-content/uploads/2020/04/NotLikeThis.png";
+			$d['error'] = "https://media1.tenor.com/images/25de98179b16facea5deafd6b1867e98/tenor.gif";
 		}
 
 		$this->set($d);
