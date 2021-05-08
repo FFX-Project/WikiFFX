@@ -149,7 +149,7 @@ class items_clefs extends controller {
 						}
 					}
 				}
-				$d['titre'] ="Administration des items_clefs";
+				$d['titre'] ="Administration des monstres";
 				$this->set($d);
 				//on rend la vue --> adminindex
 				$this->render('adminIndex');
@@ -181,7 +181,7 @@ class items_clefs extends controller {
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('item_clef');
 			$this->loadModel('location');
-			if (!$this->item_clef->deleteLoc($id)) {
+			if (!$this->item_clef->deleteIC($id)) {
 					echo "C PAS BON";
 			} else {
 			echo "bravo";

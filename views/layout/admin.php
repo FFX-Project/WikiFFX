@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/<?=WEBROOT2?>/webroot/css/style.css">
 
@@ -24,22 +25,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/<?=WEBROOT2?>/">Accueil admin <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/<?=WEBROOT2?>/">Accueil admin |<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/<?=WEBROOT2?>/monstres">Monstres <span class="sr-only"></span></a>
+        <a class="nav-link" href="/<?=WEBROOT2?>/monstres">Monstres |<span class="sr-only"></span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/<?=WEBROOT2?>/locations">Lieux <span class="sr-only"></span></a>
+        <a class="nav-link" href="/<?=WEBROOT2?>/monstres/adminIndex">Admin Monstres | <span class="sr-only"></span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/<?=WEBROOT2?>/locations/adminIndex">Admin Lieux <span class="sr-only"></span></a>
+        <a class="nav-link" href="/<?=WEBROOT2?>/locations">Lieux |<span class="sr-only"></span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs">Items clefs <span class="sr-only"></span></a>
+        <a class="nav-link" href="/<?=WEBROOT2?>/locations/adminIndex">Admin Lieux |<span class="sr-only"></span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs/adminIndex">Admin Items clefs <span class="sr-only"></span></a>
+        <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs">Items clefs |<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs/adminIndex">Admin Items clefs |<span class="sr-only"></span></a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/comptes/logout">

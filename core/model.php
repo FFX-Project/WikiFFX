@@ -109,9 +109,9 @@
 				//enleve la denriere virgule
 				$sql = substr($sql, 0, -1);
 				$sql.=" WHERE ".$Nid."=".$this->id;
-				echo "<pre>";
-				echo $sql;
-				echo "</pre>";
+				//echo "<pre>";
+				//echo $sql;
+				//echo "</pre>";
 				//préparation SQL
 				$sth = $this->db->prepare($sql);
 
@@ -208,13 +208,16 @@
 			}
 		}
 		//Ajout du contenu hors table page
-		function addContenu($data){
+		function addContenu($data,$from=null){
 			 //echo "<PRE>";
 			 //print_r($data);
 			 //echo "</PRE>";
+			 if($from == null){
+				 $from ="".$this->table."";
+			 }
 			 unset($data['id']);
 			//construction requete SQL
-			$sql="INSERT INTO ".$this->table."(";
+			$sql="INSERT INTO ".$from."(";
 			$values="";
 			foreach ($data as $key => $value) {
 				$sql.=$key.",";
@@ -235,6 +238,77 @@
 				$this->id=$this->db->lastInsertId();
 			} else {
 				echo "<br /> erreur SQL";
+			}
+		}
+//Utiliser pour mettre à jour le tableau des résistances élémentaires d'un monstre.
+		function UpdateElem($data,$from=null,$Nid=null){
+			if($from == null){
+				$from ="".$this->table."";
+			}
+			//Permet de modifier l'id des updates si elle ne ce nomme pas id.
+			if($Nid == null) {
+				$Nid = "Id_Page";
+			}
+			echo "update";
+			// echo "<PRE>";
+			// print_r($data);
+			// echo "</PRE>";
+			$this->id=$data['id'];
+			$this->Id_Elementaire = $data['Id_Elementaire'];
+			unset($data['id']);
+			unset($data['Id_Elementaire']);
+			//construction requete SQL
+			$sql="UPDATE ".$from." SET ";
+			//$values="";
+			foreach ($data as $key => $value) {
+				$sql.=$key."= :".$key.",";
+			}
+			//enleve la denriere virgule
+			$sql = substr($sql, 0, -1);
+			$sql.=" WHERE ".$Nid."=".$this->id;
+			$sql.=" AND Id_Elementaire =".$this->Id_Elementaire;
+			////echo "<pre>";
+			////echo $sql;
+			////echo "</pre>";
+			//préparation SQL
+			$sth = $this->db->prepare($sql);
+
+			//exécution SQL
+			if ($sth->execute($data)) {
+				echo "mise à jour ok ";
+			} else {
+				echo "<br /> erreur SQL";
+			}
+		}
+
+		function deleteGestLoc($data) {
+			//echo "<pre>";
+			//print_r($data);
+			//echo "</pre>";
+			$IdDel="id";
+			$from = $this->table;
+			$and = "";
+			if (isset($data["IdDel"])){
+				$IdDel=$data["IdDel"];
+			}
+			if (isset($data["from"])){
+				$from=$data["from"];
+			}
+			if(isset($data['and'])){
+				$and=$data["and"];
+			}
+			/* Exécute une requête préparée en passant un tableau de valeurs */
+			$sql = 'DELETE FROM '.$from.' WHERE ' .$IdDel.' = :id AND '.$and.' = :id2';
+			echo $sql;
+			//préparation PDO
+			$sth = $this->db->prepare($sql);
+			//chargement du résultat de la requete SQL en mémoire dans un curseur
+			if ($sth->execute(array(':id' => $this->id, ':id2' => $this->id2))) {
+				//suppr ok
+				return true;
+			} else {
+				//echo "<br /> erreur SQL";
+				return false;
 			}
 		}
 	}

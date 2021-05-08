@@ -52,7 +52,7 @@ class monstres extends controller {
 			$d['mtr']->lieux[$lieu->Id_Page] = $lieu->Nom_Page;
 		}
 
-		$this->set($d);	
+		$this->set($d);
 
 		$this->render('view');
 
@@ -61,13 +61,17 @@ class monstres extends controller {
 	function adminIndex() {
 
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
-			$this->loadModel('vehicule');
+			$this->layout='admin';
 
-			$d['vehs'] =$this->vehicule->getAll(999);
-			$d['titre'] ="Administration Vehicules";
+			$this->loadModel("monstre");
 
+			$d=array();
+			$d['mtrs'] = $this->monstre->getAll();
+
+			$d['titre'] ="Administration monstres";
 
 			$this->set($d);
+
 
 			$this->layout='admin';
 			//on rend la vue --> index
@@ -77,37 +81,37 @@ class monstres extends controller {
 
 	function adminEdit($id=null) {
 
-			if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
-			$this->loadModel('vehicule');
-			$this->loadModel('category');
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->loadModel('monstre');
+			$this->loadModel('location');
+			$this->loadModel('varianteelem');
 
 			$this->layout='admin';
 			if(!empty($_POST)) {
 				//on est en insert ou update et on affiche la liste
-				//print_r($_FILES);
 				//si fichier à télécharger renseigné
 				if(!empty($_FILES['fichier']['name']))
 				{
 					//on vérifie les extensions autorisées
-					$tabext=array('jpg','png','jpeg');
+					$tabext=array('jpg','png','jpeg','webp');
 					$extension=pathinfo($_FILES['fichier']['name'],PATHINFO_EXTENSION);
 					if (in_array(strtolower($extension),$tabext))
 					{
 						if(isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK===$_FILES['fichier']['error'])
 						{
-							$nomimage=$_POST['name'].'.'.$extension;
+							$nomimage=$this->monstre->getTable().'_'.$_POST['id'].'.'.$extension;
 							if (empty($_POST['id'])) {
 								//on est en ajout
 							} else {
 								//on est en modif
-								$v=$this->vehicule->getImage($_POST['id']);
-								unlink('./webroot/img/'.$v->image);
+								$mtr=$this->monstre->getImage($_POST['id']);
+								unlink('./webroot/img/'.$mtr->Image_Page);
 							}
 							//on télécharge le fichier avec move_uploaded_file
 							if(move_uploaded_file($_FILES['fichier']['tmp_name'],'./webroot/img/'.$nomimage))
 							{
 								//on renseigne $_POST image pour le save
-								$_POST['image']=$nomimage;
+								$_POST['Image_Page']=$nomimage;
 								echo "Upload réussi";
 							}
 							else{
@@ -117,27 +121,39 @@ class monstres extends controller {
 					}
 				}
 				unset($_POST['fichier']);
-				$this->vehicule->save($_POST);
+				$from = "page";
+				$Nid = "Id_Page";
+				if (empty($_POST['id'])) {
+					$this->monstre->addMtr($_POST,$from,$Nid);
+				} else {
+					$this->monstre->UpdateMtr($_POST,$from,$Nid);
+				}
 				$this->Session->setFlash("Votre mise à jour a bien été prise en compte");
-				$d['vehs']=$this->vehicule->getAll(999);
-				$d['titre'] ="Administration des Vehicules";
+				$d['mtrs'] = $this->monstre->getAll();
+				$d['titre'] ="Administration des monstres";
 				$this->set($d);
 				//on rend la vue --> adminindex
 				$this->render('adminIndex');
 			} else {
 				$d=array();
-				//on remplit le formualire et on l'affiche
-				//si id renseigné
-				$d['cats'] =$this->category->getLast(999);
-
+					$d['location'] = $this->location->getAll();
+					$d['elems'] = $this->varianteelem->getAll();
 				if(!empty($id)) {
 					//on remplit form
 					//on récupère les données de mon id
-					$d['veh'] =$this->vehicule->getDetail($id);
-					$d['titre'] ="Administration des vehicules";
-					// echo "<PRE>";
-					// print_r($d['cat']);
-					// echo "</PRE>";
+					$d['mtr'] = $this->monstre->getDetail($id);
+					$d['mtrelem'] = $this->monstre->getDetailElementaire($id);
+					$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+					foreach ($d['mtrelem'] as $ele)
+					{
+						$nom = $ele->Nom_Elementaire;
+						$d['mtr']->$nom = $ele->Nom_Variante;
+					}
+
+					foreach ($d['mtrlieu'] as $lieu)
+					{
+						$d['mtr']->lieux[$lieu->Id_Page] = $lieu->Nom_Page;
+					}
 				}
 				$this->set($d);
 				//on rend la vue --> adminedit
@@ -148,24 +164,100 @@ class monstres extends controller {
 	}
 
 	function adminDelete($id) {
-
-			if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
-			$this->loadModel('vehicule');
-
-			if (!$this->vehicule->deleteVeh($id)) {
-
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->loadModel('monstre');
+			if (!$this->monstre->deleteMtr($id)) {
+					echo "C PAS BON";
 			} else {
-				$this->Session->setFlash("Suppression effectuée","success");
+			echo "bravo";
+			$d['titre'] ="Administration des monstres";
+			$this->layout='admin';
 			}
-			$d['vehs'] =$this->vehicule->getLast(999);
-			$d['titre'] ="Administration Vehicules";
+			$d['mtrs'] = $this->monstre->getAll();
 
+			$d['titre'] ="Administration monstres";
+
+			$this->set($d);
+	 	 $this->render('adminIndex');
+		}
+	}
+
+	function AdminGestionLoc($id){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+
+			$this->loadModel("monstre");
+
+			$d=array();
+			$d['mtr'] = $this->monstre->getDetail($id);
+			$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+			$d['titre'] ="Administration des locations des monstres";
 
 			$this->set($d);
 
+
 			$this->layout='admin';
 			//on rend la vue --> index
-			$this->render('adminIndex');
+			$this->render('adminGestionLoc');
+		}
+	}
+
+	function adminDeleteLoc($id){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->loadModel('monstre');
+			$id2 = $_GET['id2'];
+			if (!$this->monstre->deleteLocMtr($id, $id2)) {
+					echo "C PAS BON";
+			} else {
+			echo "bravo";
+			$d['titre'] ="Administration des locations des monstres";
+			$this->layout='admin';
+			}
+			$d['mtr'] = $this->monstre->getDetail($id);
+			$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+
+			$this->set($d);
+		 $this->render('adminGestionLoc');
+		}
+	}
+
+	function adminAddLoc($id=null){
+			if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			if(empty($_POST)){
+			$this->loadModel('monstre');
+			$this->loadModel('location');
+			$this->layout="admin";
+			$d=array();
+			$d['locs'] = $this->location->getAll();
+			$d['mtr'] = $this->monstre->getDetail($id);
+			$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+
+			foreach ($d['mtrlieu'] as $lieu)
+			{
+				$d['mtr']->lieux[$lieu->Id_Page] = $lieu->Nom_Page;
+			}
+
+			$this->set($d);
+			//on rend la vue --> adminedit
+			$this->render('adminAddLoc');
+		}else{
+			$this->layout='admin';
+			$this->loadModel("monstre");
+			//Appel de la fonction pour ajouter une location à un monstre
+			$from = "a";
+			$this->monstre->addLocMtr($_POST, $from)
+			$d=array();
+			$d['mtr'] = $this->monstre->getDetail($id);
+			$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+			$d['titre'] ="Administration des locations des monstres";
+
+			$this->set($d);
+
+
+			$this->layout='admin';
+			//on rend la vue --> index
+			$this->render('adminGestionLoc');
+			}
 		}
 	}
 }

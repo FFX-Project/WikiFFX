@@ -11,7 +11,7 @@ class item_clef extends Model {
 		));
 	}
 
-	function deleteLoc($id){
+	function deleteIC($id){
 		$this->id=$id;
 		$this->delete(array("IdDel"=>"Id_Page"));
 		return $this->delete(array("from"=>"page","IdDel"=>"Id_Page"));
