@@ -3,14 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 06 mai 2021 à 12:31
+-- Généré le :  sam. 08 mai 2021 à 14:35
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 DROP DATABASE IF EXISTS FFX;
 
 CREATE DATABASE IF NOT EXISTS FFX;
 USE FFX;
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,6 +39,14 @@ CREATE TABLE IF NOT EXISTS `a` (
   PRIMARY KEY (`Id_Page`,`Id_Page_1`),
   KEY `Id_Page_1` (`Id_Page_1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `a`
+--
+
+INSERT INTO `a` (`Id_Page`, `Id_Page_1`) VALUES
+(65, 57),
+(56, 66);
 
 -- --------------------------------------------------------
 
@@ -126,8 +133,8 @@ CREATE TABLE IF NOT EXISTS `item_clef` (
 --
 
 INSERT INTO `item_clef` (`Id_Page`, `Id_Location`) VALUES
-(5, 1),
-(6, 1);
+(67, 57),
+(69, 57);
 
 -- --------------------------------------------------------
 
@@ -146,8 +153,8 @@ CREATE TABLE IF NOT EXISTS `location` (
 --
 
 INSERT INTO `location` (`Id_Page`) VALUES
-(1),
-(2);
+(57),
+(66);
 
 -- --------------------------------------------------------
 
@@ -179,8 +186,8 @@ CREATE TABLE IF NOT EXISTS `monstre` (
 --
 
 INSERT INTO `monstre` (`Id_Page`, `Hp_Monstre`, `Accuracy_Monstre`, `Chance_Monstre`, `Defence_Monstre`, `DefenceMagique_Monstre`, `Agi_Monstre`, `Esquive_Monstre`, `Mp_Monstre`, `Force_Monstre`, `Magie_Monstre`, `Overkill_Monstre`, `Gil_Monstre`, `XP_Monstre`) VALUES
-(3, 1000, 2, 3, 4, 5, '6', '7', 8, 9, 10, 11, 12, 13),
-(4, 1, 1, 1, 1, 1, '1', '1', 1, 1, 1, 1, 1, 1);
+(56, 6000, 0, 15, 1, 40, '18', '0', 480, 38, 26, 4060, 1100, 1300),
+(65, 750, 10, 15, 15, 5, '15', '15', 10, 10, 8, 300, 100, 3);
 
 -- --------------------------------------------------------
 
@@ -203,10 +210,14 @@ CREATE TABLE IF NOT EXISTS `ont` (
 --
 
 INSERT INTO `ont` (`Id_Page`, `Id_Elementaire`, `Id_Variante`) VALUES
-(3, 1, 2),
-(4, 2, 1),
-(4, 2, 2),
-(3, 4, 2);
+(56, 1, 2),
+(65, 1, 2),
+(56, 2, 2),
+(65, 2, 2),
+(56, 3, 4),
+(65, 3, 2),
+(56, 4, 4),
+(65, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -221,23 +232,40 @@ CREATE TABLE IF NOT EXISTS `page` (
   `Image_Page` varchar(50) DEFAULT NULL,
   `Description_Page` text,
   PRIMARY KEY (`Id_Page`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `page`
 --
 
 INSERT INTO `page` (`Id_Page`, `Nom_Page`, `Image_Page`, `Description_Page`) VALUES
-(1, 'NOM DE LA PAGE', 'NOM DE LA PAGE.webp', 'CESTLADESCRIPTIONH'),
-(2, 'besaid mabite', 'location_2.webp', 'AAdzedzda dza'),
-(3, 'juliett', 'oui.jpg', 'le seul lunique 5head hiih'),
-(4, 'gwendall', 'gwen.jpp', 'ouihihi'),
-(5, 'manuel albed', 'item_clef_5.webp', 'l\'alphabet quoi merde'),
-(6, 'a', 'item_clef_6.webp', 'dadada'),
 (10, 'dzadza', 'item_clef_.webp', 'dzadaz'),
 (11, 'dzadza', 'item_clef_.webp', 'dzadaz'),
 (12, 'gre', 'item_clef_.webp', 'rge'),
-(13, 'gre', 'item_clef_.webp', 'rge');
+(13, 'gre', 'item_clef_.webp', 'rge'),
+(21, 'dza', NULL, 'dza'),
+(22, 'dza', NULL, 'dza'),
+(23, 'dza', NULL, 'dza'),
+(24, 'dza', NULL, 'd'),
+(25, 'dza', NULL, 'd'),
+(26, 'dza', NULL, 'd'),
+(27, 'dza', NULL, 'd'),
+(28, 'dza', NULL, 'd'),
+(29, 'dza', NULL, 'd'),
+(30, 'dza', NULL, 'd'),
+(31, 'dza', NULL, 'd'),
+(32, 'dza', NULL, 'd'),
+(33, 'dza', NULL, 'd'),
+(34, 'dza', NULL, 'd'),
+(35, 'dza', NULL, 'd'),
+(49, 'daz', 'monstre_.webp', 'a'),
+(50, 'daz', 'monstre_.webp', 'a'),
+(56, 'Couguar', 'monstre_56.webp', 'Le Couguar est un ennemi de Final Fantasy X rencontrÃ© sur la plaine FÃ©licitÃ© et dans la grotte du Priant volÃ©.'),
+(57, 'Besaid', 'location_57.webp', 'La premiÃ¨re visite de l\'Ã®le de Besaid se situe au dÃ©but du jeu, aprÃ¨s que la barge des Al Bheds se fasse attaquer par Sin. Tidus se rÃ©veille dans l\'eau, prÃ¨s de la plage oÃ¹ l\'Ã©quipe des Besaid Aurochs s\'entraÃ®ne. AprÃ¨s une dÃ©monstration de blitzball, Tidus fait la connaissance de Wakka, capitaine et entraineur de l\'Ã©quipe.. Ce dernier l\'emmÃ¨ne au village et lui prÃ©sente l\'Ã®le.<br/>\r\n\r\nUne fois arrivÃ©, Wakka quitte Tidus. Ce dernier visite alors le village, rencontre Luzzu et Gatta, les Bannisseurs et s\'endort chez Wakka. Ã€ son rÃ©veil, Tidus entend parler d\'un Invokeur qui n\'est pas encore revenu du temple. Il se rend dans la salle de l\'Ã©preuve, contre l\'avis de Wakka et des prÃªtres. AprÃ¨s l\'avoir parcourue, il se retrouve dans l\'antichambre oÃ¹ il rencontre Lulu et Kimahri, deux gardiens.<br/>\r\n\r\nSuite Ã  ces discussions, Yuna, l\'invokeur, sort de la chambre du priant.\r\n\r\nEn sortant du temple, Yuna invoque Valefore afin de faire la dÃ©monstration de ses talents.\r\n\r\nLe lendemain, Wakka offre Ã  Tidus l\'Ã©pÃ©e FraternitÃ©, et tous ensemble ils se rendent sur l\'embarcadÃ¨re afin de prendre le bÃ¢teau pour quitter l\'Ã®le. Tidus veut se rendre Ã  Luca pour essayer de revoir une connaissance, et les autres dÃ©butent le pÃ¨lerinage de Yuna.\r\n\r\nLa seconde visite de l\'Ã®le est facultative, vous pourrez en effet vous y rendre Ã  nouveau afin de prendre les trÃ©sors dans la chambre du priant une sphÃ¨re de Jecht Ã  l\'extÃ©rieur du temple. Pour accÃ©der au village, il faudra affronter Valefore purgatrice.<br/>'),
+(65, 'Kimahri', 'monstre_65.webp', 'Kimahri Ronso est un personnage jouable dans Final Fantasy X et un personnage non-jouable dans Final Fantasy X-2. Membre de la tribu des Ronsos, il est taciturne, Ã  cause de la honte d\'avoir eu sa corne brisÃ©e par un autre Ronso. Protecteur de Yuna depuis son enfance, il devient un Gardien pendant son pÃ¨lerinage.'),
+(66, 'Plaine FÃ©licitÃ©', 'location_66.webp', 'C\'est une vaste Ã©tendue bordÃ©e Ã  l\'est et Ã  l\'ouest par des falaises, au nord par un prÃ©cipice et au sud par la forÃªt de Macalania. Ã€ partir de la sortie de la forÃªt on y accÃ¨de par un large chemin qui descend en pente douce. Un chemin Ã©troit et encaissÃ© au nord-est de la plaine mÃ¨ne Ã  la grotte du Priant volÃ© et au mont Gagazet.\r\n\r\nC\'est une plaine dÃ©solÃ©e oÃ¹ Ã©mergent Ã§Ã  et lÃ  des aiguilles en pierre. Dans Final Fantasy X la seule implantation humaine est un campement au centre de la plaine, oÃ¹ se situe un magasin pour les voyageurs. On y trouve Ã©galement une Ã©leveuse de chocobos qui peut prÃªter un chocobo et organise un entrainement pour apprendre Ã  le monter. Dans Final Fantasy X-2 le comptoir bleu et le comptoir argent y organisent des jeux.\r\n\r\nIl y a deux lieux annexes Ã  la plaine FÃ©licitÃ© :\r\n\r\nun Ã©troit chemin creusÃ© dans la falaise Ã  l\'est mÃ¨ne au centre d\'entrainement de Mi\'ihen, un lieu dÃ©diÃ© Ã  l\'entrainement des Bannisseurs, crÃ©Ã© par Sire Mi\'ihen lui-mÃªme ; dans Final Fantasy X-2 Clasko y installe une Ã©curie de chocobos.\r\nen tournant Ã  droite en sortant de la forÃªt de Macalania, et muni d\'un chocobo, on franchit l\'espace vide et on aboutit au temple de Remiem.'),
+(67, 'Livre Al Bhed II', 'item_clef_67.webp', 'Translates Y to A'),
+(69, 'aa', 'item_clef_69.webp', '');
 
 -- --------------------------------------------------------
 
@@ -248,7 +276,7 @@ INSERT INTO `page` (`Id_Page`, `Nom_Page`, `Image_Page`, `Description_Page`) VAL
 DROP TABLE IF EXISTS `varianteelem`;
 CREATE TABLE IF NOT EXISTS `varianteelem` (
   `Id_Variante` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom_Variante` varchar(50) DEFAULT NULL,
+  `Nom_Variante` TEXT NOT NULL,
   PRIMARY KEY (`Id_Variante`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
