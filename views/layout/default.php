@@ -61,12 +61,12 @@
 		?>
 		</div>
 	  </div>
-      <!-- FOOTER -->
-      <footer class="container">
-        <hr>
-        <div class="float-right"><a href="#">Retour en haut</a></div>
-        <p>FFX Wiki &copy; 2020-2021 Echo Golf & Juliett Delta Inc,</p>
-      </footer>
+
+      <nav class="navbar fixed-bottom navbar-light bg-light">
+        <div>FFX Wiki &copy; 2020-2021 Echo Golf & Juliett Delta Inc,</div>
+        <a class="navbar-brand" href="#">Retour en haut</a>
+      </nav>
+
 	</div>
 
 

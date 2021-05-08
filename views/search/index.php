@@ -3,7 +3,8 @@
 		<div class="col-sm">
 			<h2><?=$titre?></h2>
 
-			<?
+			<?php
+
 			if (isset($error))
 			{
 				echo "<img src='".$error."' class='img-fluid'>";
@@ -13,7 +14,7 @@
 				?>
 				<table class="table table-striped">
 				<tbody>
-				<?
+				<?php
 				foreach ($resultat as $r)
 				{
 					echo "<tr>";
