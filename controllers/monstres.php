@@ -182,7 +182,7 @@ class monstres extends controller {
 		}
 	}
 
-	function AdminGestionLoc($id){
+	function adminGestionLoc($id){
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->layout='admin';
 
@@ -245,7 +245,7 @@ class monstres extends controller {
 			$this->loadModel("monstre");
 			//Appel de la fonction pour ajouter une location à un monstre
 			$from = "a";
-			$this->monstre->addLocMtr($_POST, $from)
+			$this->monstre->addLocMtr($_POST, $from);
 			$d=array();
 			$d['mtr'] = $this->monstre->getDetail($id);
 			$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
