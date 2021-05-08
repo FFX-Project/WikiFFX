@@ -1,9 +1,4 @@
 <h1><?=$titre?></h1>
-<?php
-	/*echo "<PRE>";
-	print_r($mtrs); 
-	echo "</PRE>";*/
-?>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -15,8 +10,8 @@
     </tr>
   </thead>
   <tbody>
-	<?php 
-	foreach ($mtrs as $m){	
+	<?php
+	foreach ($mtrs as $m){
 		echo "<tr>";
 		echo '  <th scope="row">'.$m->Id_Page.'</th>';
 		echo '  <td><a href="/'.WEBROOT2.'/monstres/view/'.$m->Id_Page.'">'.$m->Nom_Page.'</td>';
