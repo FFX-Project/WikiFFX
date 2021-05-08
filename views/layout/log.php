@@ -8,6 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <link rel="stylesheet" type="text/css" href="/<?=WEBROOT2?>/webroot/css/style.css">
+
     <title>Wiki FFX</title>
   </head>
   <body>
@@ -32,6 +34,11 @@
         <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs">Items clefs <span class="sr-only"></span></a>
       </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/search/">
+      <input class="form-control mr-sm-2" name="q" type="search" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>" placeholder="Recherche..." aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">🔍</button>
+    </form>
+    <div>&nbsp;</div>
     <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/comptes/logout">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Déconnexion</button>
     </form>
@@ -56,8 +63,9 @@
 	  </div>
       <!-- FOOTER -->
       <footer class="container">
-        <p class="float-right"><a href="#">Retour en haut</a></p>
-        <p>&copy; 2019-2020 NICOLAS SIO2 Company, Inc. &middot; ICI, c'est le pied &middot; <a href="#">Conditions de vente</a></p>
+        <hr>
+        <div class="float-right"><a href="#">Retour en haut</a></div>
+        <p>FFX Wiki &copy; 2020-2021 Echo Golf & Juliett Delta Inc,</p>
       </footer>
 	</div>
 

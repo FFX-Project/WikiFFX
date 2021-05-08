@@ -14,11 +14,11 @@ class item_clef extends Model {
 	function deleteIC($id){
 		$this->id=$id;
 		$this->delete(array("IdDel"=>"Id_Page"));
-		return $this->delete(array("from"=>"Page","IdDel"=>"Id_Page"));
+		return $this->delete(array("from"=>"page","IdDel"=>"Id_Page"));
 	}
 
 	function getImage($id){
-		return $this->findFirst(array("fields"=>'Page.Image_Page', "from"=>'Page',"condition"=>'Id_Page='.$id));
+		return $this->findFirst(array("fields"=>'page.Image_Page', "from"=>'page',"condition"=>'Id_Page='.$id));
 	}
 
 	function getDetail($id){
@@ -29,7 +29,7 @@ class item_clef extends Model {
 	}
 
 	function getId($nom){
-		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"Page", "order"=> "Id_Page"));
+		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"page", "order"=> "Id_Page"));
 	}
 
 	function getTable(){

@@ -11,6 +11,8 @@
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="/<?=WEBROOT2?>/webroot/css/style.css">
+
     <title>WikiFFX</title>
   </head>
   <body>
@@ -69,8 +71,9 @@
 	  </div>
       <!-- FOOTER -->
       <footer class="container">
-        <p class="float-right"><a href="#">Retour en haut</a></p>
-        <p>&copy; 2019-2020 NICOLAS SIO2 Company, Inc. &middot; ICI, c'est le pied &middot; <a href="#">Conditions de vente</a></p>
+        <hr>
+        <div class="float-right"><a href="#">Retour en haut</a></div>
+        <p>FFX Wiki &copy; 2020-2021 Echo Golf & Juliett Delta Inc,</p>
       </footer>
 	</div>
 
