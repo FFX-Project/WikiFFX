@@ -16,10 +16,10 @@ class monstres extends controller {
 			// "ordre"=>"4"
 		// );
 		$this->loadModel('monstre');
+		$this->loadModel('commentary');
 
 		$d['mtrs'] = $this->monstre->getAll();
-		$d['titre'] ="Liste des monstres";
-
+		$d['titre'] = "Liste des monstres";
 
 		$this->set($d);
 
@@ -36,10 +36,19 @@ class monstres extends controller {
 			$this->layout='default';
 		}
 		$this->loadModel('monstre');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
 
 		$d['mtr'] = $this->monstre->getDetail($id);
 		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);
 		$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
 
 		foreach ($d['mtrelem'] as $ele)
 		{
