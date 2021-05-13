@@ -99,11 +99,12 @@ class monstres extends controller {
 					{
 						if(isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK===$_FILES['fichier']['error'])
 						{
-							$nomimage=$this->monstre->getTable().'_'.$_POST['id'].'.'.$extension;
 							if (empty($_POST['id'])) {
-								//on est en ajout
+								//add
+								$nomimage=$this->monstre->getTable().'_'.$this->monstre->getNewId().'.'.$extension;
 							} else {
-								//on est en modif
+								//update
+								$nomimage=$this->monstre->getTable().'_'.$_POST['id'].'.'.$extension;
 								$mtr=$this->monstre->getImage($_POST['id']);
 								unlink('./webroot/img/'.$mtr->Image_Page);
 							}
@@ -166,9 +167,11 @@ class monstres extends controller {
 	function adminDelete($id) {
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('monstre');
+			$mtr = $this->monstre->getImage($id);
 			if (!$this->monstre->deleteMtr($id)) {
 					echo "C PAS BON";
 			} else {
+			unlink('./webroot/img/'.$mtr->Image_Page);
 			echo "bravo";
 			$d['titre'] ="Administration des monstres";
 			$this->layout='admin';

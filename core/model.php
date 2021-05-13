@@ -311,5 +311,14 @@
 				return false;
 			}
 		}
+
+		 function getMaxId(){
+			$sql =	' SELECT MAX(Id_Page) AS idMax FROM page';
+			$sth = $this->db->prepare($sql);
+			$sth->execute();
+			$id = $sth->fetchAll(PDO::FETCH_OBJ);
+			print_r($id);
+			return $id;
+		}
 	}
 ?>

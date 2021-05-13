@@ -110,9 +110,11 @@ class items_clefs extends controller {
 						{
 							$nomimage=$this->item_clef->getTable().'_'.$_POST['id'].'.'.$extension;
 							if (empty($_POST['id'])) {
-								//on est en ajout
+								//add
+								$nomimage=$this->item_clef->getTable().'_'.$this->item_clef->getNewId().'.'.$extension;
 							} else {
-								//on est en modif
+								//update
+								$nomimage=$this->item_clef->getTable().'_'.$_POST['id'].'.'.$extension;
 								$ic=$this->item_clef->getImage($_POST['id']);
 								unlink('./webroot/img/'.$ic->Image_Page);
 							}
@@ -181,9 +183,11 @@ class items_clefs extends controller {
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('item_clef');
 			$this->loadModel('location');
+			$ic = $this->item_clef->getImage($id);
 			if (!$this->item_clef->deleteIC($id)) {
 					echo "C PAS BON";
 			} else {
+			unlink('./webroot/img/'.$ic->Image_Page);
 			echo "bravo";
 			$d['titre'] ="Administration items clefs";
 			$this->layout='admin';

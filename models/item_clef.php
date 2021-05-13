@@ -91,5 +91,11 @@ class item_clef extends Model {
 		unset($data['Image_Page']);
 		$this->save($data,null,$Nid);
 	}
+
+	function getNewId(){
+		$d = $this->getMaxId();
+		$id = $d[0]->idMax + 1;
+		return $id;
+	}
 }
 ?>

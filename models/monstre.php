@@ -222,5 +222,11 @@ class monstre extends Model {
 	function addLocMtr($data, $from){
 		return $this->addContenu($data,$from);
 	}
+	//recupére le dernier id dans la table page + 1
+	function getNewId(){
+		$d = $this->getMaxId();
+		$id = $d[0]->idMax + 1;
+		return $id;
+	}
 }
 ?>

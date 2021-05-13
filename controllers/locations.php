@@ -74,11 +74,11 @@ class locations extends controller {
 					{
 						if(isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK===$_FILES['fichier']['error'])
 						{
-							$nomimage=$this->location->getTable().'_'.$_POST['id'].'.'.$extension;
 							if (empty($_POST['id'])) {
-								//on est en ajout
+								$nomimage=$this->location->getTable().'_'.$this->location->getNewId().'.'.$extension;
 							} else {
-								//on est en modif
+								//update
+								$nomimage=$this->location->getTable().'_'.$_POST['id'].'.'.$extension;
 								$l=$this->location->getImage($_POST['id']);
 								unlink('./webroot/img/'.$l->Image_Page);
 							}
@@ -130,9 +130,11 @@ class locations extends controller {
 	function adminDelete($id) {
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('location');
+			$l = $this->location->getImage($id);
 			if (!$this->location->deleteLoc($id)) {
 					echo "C PAS BON";
 			} else {
+			unlink('./webroot/img/'.$l->Image_Page);
 			echo "bravo";
 			$this->layout='admin';
 			}

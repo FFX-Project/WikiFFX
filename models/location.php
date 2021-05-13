@@ -67,5 +67,11 @@ class location extends Model {
 		//print_r($data);
 		$this->addContenu($data);
 	}
+
+	function getNewId(){
+		$d = $this->getMaxId();
+		$id = $d[0]->idMax + 1;
+		return $id;
+	}
 }
 ?>
