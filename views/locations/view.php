@@ -1,8 +1,3 @@
-<?php
-	echo "<PRE>";
-	print_r($loc);
-	echo "</PRE>";
-?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><u><?=$loc->Nom_Page?></u></h2>
@@ -32,6 +27,37 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h4><u>Commentaires :</u></h4>
+			<?php
+			if(isset($_SESSION['compte'])){
+			 ?>
+			<form action="/<?=WEBROOT2?>/locations/addCom/<?=$loc->Id_Page?>" method="post">
+   				<textarea class="form-control"  placeholder="Ecrire un doux et merveilleux commentaire" name="Text_Commentaire" rows="1"></textarea>
+   				<br/>
+   				<button type="submit" class="btn btn-primary">Envoyer</button>
+			</form>
+			<hr>
+
+			<?php
+		}
+		if(count($commentaires) == 0){
+			?>
 			<p>Aucun commenaitre pour l'instant...</p>
+			<?php
+		} else {
+			foreach ($commentaires as $com) {
+				echo "<div>";
+				echo $com->pseudo;
+				echo " : ";
+				echo $com->Text_Commentaire;
+				echo $com->Date_Commentaire;
+			if(isset($_SESSION['compte'])){
+				if($_SESSION['compte']->Droit_Compte == 1){
+					echo "<a href='/".WEBROOT2."/locations/delCom/".$loc->Id_Page."&idD=".$com->Id_Commentaire."' onclick=\"return confirm('Voulez vous vraiment supprimer ce commentaire?');\"><i class='fas fa-trash-alt'></i></a></td>";
+				}
+			}
+				echo "</div>";
+			}
+		}
+			?>
 		</div>
 	</div>

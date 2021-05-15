@@ -30,9 +30,17 @@ class locations extends controller {
 			$this->layout='default';
 		}
 		$this->loadModel('location');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
 		$d['loc'] = $this->location->getDetail($id);
 		$d['locmtr'] = $this->location->getAllMonstre($id);
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
 
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
 
 		foreach ($d['locmtr'] as $mtr)
 		{
@@ -152,6 +160,87 @@ class locations extends controller {
 		$this->set($d);
 		$this->render('adminIndex');
 		}
+	}
+
+	function addCom($id){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
+		$this->loadModel('location');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
+		$d = array();
+		$date = $this->commentary->getDateNow();
+		$add = array("Text_Commentaire"=>$_POST['Text_Commentaire'],"Date_Commentaire"=>$date[0]->Date, "Id_Page"=>$id, "Id_Compte"=>$_SESSION['compte']->Id_Compte);
+		$this->commentary->save($add);
+
+		$d['loc'] = $this->location->getDetail($id);
+		$d['locmtr'] = $this->location->getAllMonstre($id);
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
+
+		foreach ($d['locmtr'] as $mtr)
+		{
+			$d['loc']->monstres[$mtr->Id_Page] = $mtr->Nom_Page;
+		}
+
+
+		$this->set($d);
+
+		$this->render('view');
+	}
+
+	function delCom($id){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
+
+		$this->loadModel('location');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
+		$d = array();
+		//on récupére l'id a delete
+		$idD = $_GET['idD'];
+		if (!$this->commentary->deleteCom($idD)) {
+				echo "C PAS BON";
+		} else
+		{
+			echo "bravo";
+		}
+
+		$d['loc'] = $this->location->getDetail($id);
+		$d['locmtr'] = $this->location->getAllMonstre($id);
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
+
+		foreach ($d['locmtr'] as $mtr)
+		{
+			$d['loc']->monstres[$mtr->Id_Page] = $mtr->Nom_Page;
+		}
+
+
+		$this->set($d);
+
+		$this->render('view');
+
 	}
 }
 ?>
