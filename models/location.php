@@ -42,6 +42,16 @@ class location extends Model {
 		));
 	}
 
+	function getAllMonstre($id)
+	{
+		return $this->find(array(
+			"fields" => 'page.Id_Page, page.Nom_Page',
+			"inner" => 'INNER JOIN a ON location.Id_Page = a.Id_Page_1 INNER JOIN monstre ON a.Id_Page = monstre.Id_Page INNER JOIN page ON monstre.Id_Page = page.Id_Page',
+			"where" => 'location.Id_Page='.$id,
+			"order" => 'page.id_Page ASC'
+		));
+	}
+
 	function addLoc($data,$from=null, $Nid=null){
 		//Si la talbe n'est pas celle de la classe appeller
 		if($from == null){

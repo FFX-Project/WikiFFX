@@ -1,7 +1,7 @@
 <?php
-	/*echo "<PRE>";
+	echo "<PRE>";
 	print_r($loc);
-	echo "</PRE>";*/
+	echo "</PRE>";
 ?>
 	<div class="row">
 		<div class="col-md-12">
@@ -15,6 +15,18 @@
 		<div class="col-md-8">
 			<h4><u>Description :</u></h4>
 			<p><?=$loc->Description_Page?></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h4><u>Monstres :</u></h4>
+			<?php
+			foreach ($loc->monstres as $key => $value) {
+				?>
+				<button type="button" onclick="window.location = '/<?=WEBROOT2?>/monstres/view/<?=$key?>'" class="btn btn-info"><?=$value?></button>
+				<?php
+			}
+			?>
 		</div>
 	</div>
 	<div class="row">
