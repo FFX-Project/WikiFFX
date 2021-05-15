@@ -1,3 +1,9 @@
+<?php
+	echo "<pre>";
+	print_r($commentaires);
+	echo "</pre>";
+?>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -59,6 +65,25 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h4><u>Commentaires :</u></h4>
+			<form action="/<?=WEBROOT2?>/monstres/view/<?=$mtr->Id_Page?>" method="post">
+   				<textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Ecrire un doux et merveilleux commentaire" name="commentaire" rows="1"></textarea>
+   				<br>
+   				<button type="submit" class="btn btn-primary">Envoyer</button>
+			</form>
+			<hr>
+
+			<?php
+
+			foreach ($commentaires as $com) {
+				echo "<div>";
+				echo $com->pseudo;
+				echo " : ";
+				echo $com->Text_Commentaire;
+				echo "</div>";
+			}
+
+			?>
+
 			<p>Aucun commenaitre pour l'instant...</p>
 		</div>
 	</div>
