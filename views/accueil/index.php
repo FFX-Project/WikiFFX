@@ -41,7 +41,7 @@
 	  			<br>
 	  			<h2><u>BREAKING NEWS : LA FILLE DE BARRET EST MORTE !!!</u></h2>
 	  			<p>On vient de l'apprendre a l'instant, mais oui, la triste réalité a encore frappé, la fille de Barret est bien morte cette nuit, pendant la destruction du secteur 7 de Midgar. Aerith a survécu...</p>
-	  		</div>  		
+	  		</div>
 	  	</div>
 
 	</div>

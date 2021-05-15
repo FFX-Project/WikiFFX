@@ -13,7 +13,9 @@
 			  <div class="form-group">
 				<label for="exampleInputPassword1">Password</label>
 				<input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Entrer votre mot de passe">
-			  </div>
+				</div> <br>
+				<a href="/<?=WEBROOT2?>/comptes/inscription">Inscription </a>
+				<br>
 			  <button type="submit" class="btn btn-primary">Se connecter</button>
 			</form>
 		</div>
