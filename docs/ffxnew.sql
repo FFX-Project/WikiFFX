@@ -58,6 +58,7 @@ DROP TABLE IF EXISTS `commentaire`;
 CREATE TABLE IF NOT EXISTS `commentaire` (
   `Id_Commentaire` int(11) NOT NULL AUTO_INCREMENT,
   `Text_Commentaire` varchar(255) DEFAULT NULL,
+  `Date_Commentaire` datetime,
   `Id_Page` int(11) DEFAULT NULL,
   `Id_Commentaire_1` int(11) DEFAULT NULL,
   `Id_Compte` int(11) NOT NULL,

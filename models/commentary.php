@@ -10,4 +10,12 @@ class commentary extends Model {
 		));
 	}
 
+	function deleteCom($id){
+		$this->id = $id;
+		return $this->delete(array("IdDel"=>"Id_Commentaire"));
+	}
+
+	function getDate(){
+		return $this->getDateNow();
+	}
 }

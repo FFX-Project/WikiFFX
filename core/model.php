@@ -66,9 +66,9 @@
 			if (empty($data["id"])){
 				//echo "insert";
 				unset($data['id']);
-				// echo "<PRE>";
-				// print_r($data);
-				// echo "</PRE>";
+				//echo "<PRE>";
+				 //print_r($data);
+				 //echo "</PRE>";
 				//construction requete SQL
 				$sql="INSERT INTO ".$from."(";
 				$values="";
@@ -320,5 +320,13 @@
 			print_r($id);
 			return $id;
 		}
+
+		function getDateNow(){
+		 $sql =	' SELECT NOW() AS Date';
+		 $sth = $this->db->prepare($sql);
+		 $sth->execute();
+		 $date = $sth->fetchAll(PDO::FETCH_OBJ);
+		 return $date;
+	 }
 	}
 ?>

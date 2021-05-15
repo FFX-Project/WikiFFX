@@ -62,12 +62,15 @@
 			?>
 		</div>
 	</div>
+	<?php
+		// IL FAUT QU'IL SOIT CONNECTER POUR VOIR LES COMMENTAIRES
+	 ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h4><u>Commentaires :</u></h4>
-			<form action="/<?=WEBROOT2?>/monstres/view/<?=$mtr->Id_Page?>" method="post">
-   				<textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Ecrire un doux et merveilleux commentaire" name="commentaire" rows="1"></textarea>
-   				<br>
+			<form action="/<?=WEBROOT2?>/monstres/addCom/<?=$mtr->Id_Page?>" method="post">
+   				<textarea class="form-control"  placeholder="Ecrire un doux et merveilleux commentaire" name="Text_Commentaire" rows="1"></textarea>
+   				<br/>
    				<button type="submit" class="btn btn-primary">Envoyer</button>
 			</form>
 			<hr>
@@ -79,6 +82,10 @@
 				echo $com->pseudo;
 				echo " : ";
 				echo $com->Text_Commentaire;
+				echo $com->Date_Commentaire;
+				if($_SESSION['compte']->Droit_Compte == 1){
+					echo "<a href='/".WEBROOT2."/monstres/delCom/".$mtr->Id_Page."&idD=".$com->Id_Commentaire."' onclick=\"return confirm('Voulez vous vraiment supprimer ce commentaire?');\"><i class='fas fa-trash-alt'></i></a></td>";
+				}
 				echo "</div>";
 			}
 

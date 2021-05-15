@@ -9,14 +9,9 @@ class monstres extends controller {
 		}else{
 			$this->layout='default';
 		}
-		//echo "méthode index de la classe category";
 		$d=array();
-		// $d['cat'] = array (
-			// "nom"=>"berline",
-			// "ordre"=>"4"
-		// );
+
 		$this->loadModel('monstre');
-		$this->loadModel('commentary');
 
 		$d['mtrs'] = $this->monstre->getAll();
 		$d['titre'] = "Liste des monstres";
@@ -271,6 +266,102 @@ class monstres extends controller {
 			$this->render('adminGestionLoc');
 			}
 		}
+	}
+
+	function addCom($id){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
+
+		$this->loadModel('monstre');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
+		$d = array();
+		$date = $this->commentary->getDateNow();
+		$add = array("Text_Commentaire"=>$_POST['Text_Commentaire'],"Date_Commentaire"=>$date[0]->Date, "Id_Page"=>$id, "Id_Compte"=>$_SESSION['compte']->Id_Compte);
+		echo "<pre>";
+		print_r($add);
+		echo "</pre>";
+		$this->commentary->save($add);
+		$d['mtr'] = $this->monstre->getDetail($id);
+		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);
+		$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
+
+		foreach ($d['mtrelem'] as $ele)
+		{
+			$nom = $ele->Nom_Elementaire;
+			$d['mtr']->$nom = $ele->Nom_Variante;
+		}
+
+		foreach ($d['mtrlieu'] as $lieu)
+		{
+			$d['mtr']->lieux[$lieu->Id_Page] = $lieu->Nom_Page;
+		}
+
+		$this->set($d);
+
+		$this->render('view');
+	}
+
+	function delCom($id){
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			$this->layout='admin';
+		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			$this->layout="log";
+		}else{
+			$this->layout='default';
+		}
+
+		$this->loadModel('monstre');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
+		$d = array();
+		$idD = $_GET['idD'];
+		echo ($idD);
+		echo ("aaa");
+		echo ($id);
+		if (!$this->commentary->deleteCom($idD)) {
+				echo "C PAS BON";
+		} else
+		{
+			echo "bravo";
+		}
+		$d['mtr'] = $this->monstre->getDetail($id);
+		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);
+		$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
+
+		foreach ($d['mtrelem'] as $ele)
+		{
+			$nom = $ele->Nom_Elementaire;
+			$d['mtr']->$nom = $ele->Nom_Variante;
+		}
+
+		foreach ($d['mtrlieu'] as $lieu)
+		{
+			$d['mtr']->lieux[$lieu->Id_Page] = $lieu->Nom_Page;
+		}
+
+		$this->set($d);
+
+		$this->render('view');
 	}
 }
 ?>
