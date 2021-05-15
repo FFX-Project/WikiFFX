@@ -1,9 +1,3 @@
-<?php
-	echo "<pre>";
-	print_r($commentaires);
-	echo "</pre>";
-?>
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -80,6 +74,11 @@
 
 			<?php
 		}
+		if(count($commentaires) == 0){
+			?>
+			<p>Aucun commenaitre pour l'instant...</p>
+			<?php
+		} else {
 			foreach ($commentaires as $com) {
 				echo "<div>";
 				echo $com->pseudo;
@@ -93,10 +92,10 @@
 			}
 				echo "</div>";
 			}
+		}
 
 			?>
 
-			<p>Aucun commenaitre pour l'instant...</p>
 		</div>
 	</div>
 </div>

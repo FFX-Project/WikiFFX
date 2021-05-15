@@ -42,8 +42,17 @@ class items_clefs extends controller {
 		}
 		$this->loadModel('item_clef');
 		$this->loadModel('location');
+		$this->loadModel('commentary');
+		$this->loadModel('compte');
 		$d['item_clef'] = $this->item_clef->getDetail($id);
 		$d['location'] = $this->location->getAll();
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
 
 		foreach($d['location'] as $l){
 			if($d['item_clef']->Id_Location == $l->Id_Page){
@@ -207,5 +216,93 @@ class items_clefs extends controller {
 	 	 $this->render('adminIndex');
 		}
 	 }
+
+	 function addCom($id){
+		 if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			 $this->layout='admin';
+		 }elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			 $this->layout="log";
+		 }else{
+			 $this->layout='default';
+		 }
+		$this->loadModel('item_clef');
+ 		$this->loadModel('location');
+ 		$this->loadModel('commentary');
+ 		$this->loadModel('compte');
+		$d = array();
+		$date = $this->commentary->getDateNow();
+		$add = array("Text_Commentaire"=>$_POST['Text_Commentaire'],"Date_Commentaire"=>$date[0]->Date, "Id_Page"=>$id, "Id_Compte"=>$_SESSION['compte']->Id_Compte);
+		$this->commentary->save($add);
+		$d['item_clef'] = $this->item_clef->getDetail($id);
+		$d['location'] = $this->location->getAll();
+		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+		foreach ($d['commentaires'] as $comm)
+		{
+			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+			$comm->pseudo = $pseudo->Pseudo_Compte;
+		}
+
+		foreach($d['location'] as $l){
+			if($d['item_clef']->Id_Location == $l->Id_Page){
+				//ajout du nom de la location dans l'objet items_clefs
+				$d['item_clef']->nom_location = $l->Nom_Page;
+			}
+		}
+
+		$d['titre'] = $d['item_clef']->Nom_Page;
+		$this->set($d);
+
+		$this->render('view');
+
+	}
+
+	 function delCom($id){
+		 if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+			 $this->layout='admin';
+		 }elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+			 $this->layout="log";
+		 }else{
+			 $this->layout='default';
+		 }
+
+
+		 $this->loadModel('item_clef');
+		 $this->loadModel('location');
+		 $this->loadModel('commentary');
+		 $this->loadModel('compte');
+		 $d = array();
+		 //on récupére l'id a delete
+		 $idD = $_GET['idD'];
+		 if (!$this->commentary->deleteCom($idD)) {
+				 echo "C PAS BON";
+		 } else
+		 {
+			 echo "bravo";
+		 }
+
+		$d['item_clef'] = $this->item_clef->getDetail($id);
+ 		$d['location'] = $this->location->getAll();
+ 		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
+
+ 		foreach ($d['commentaires'] as $comm)
+ 		{
+ 			$pseudo = $this->compte->getPseudo($comm->Id_Compte);
+ 			$comm->pseudo = $pseudo->Pseudo_Compte;
+ 		}
+
+ 		foreach($d['location'] as $l){
+ 			if($d['item_clef']->Id_Location == $l->Id_Page){
+ 				//ajout du nom de la location dans l'objet items_clefs
+ 				$d['item_clef']->nom_location = $l->Nom_Page;
+ 			}
+ 		}
+
+ 		$d['titre'] = $d['item_clef']->Nom_Page;
+ 		$this->set($d);
+
+ 		$this->render('view');
+
+ 	}
 	}
 	?>
