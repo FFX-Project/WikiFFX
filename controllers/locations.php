@@ -31,6 +31,15 @@ class locations extends controller {
 		}
 		$this->loadModel('location');
 		$d['loc'] = $this->location->getDetail($id);
+		$d['locmtr'] = $this->location->getAllMonstre($id);
+
+
+		foreach ($d['locmtr'] as $mtr)
+		{
+			$d['loc']->monstres[$mtr->Id_Page] = $mtr->Nom_Page;
+		}
+
+
 		$this->set($d);
 
 		$this->render('view');
