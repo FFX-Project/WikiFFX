@@ -68,6 +68,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h4><u>Commentaires :</u></h4>
+			<?php
+			if(isset($_SESSION['compte'])){
+			 ?>
 			<form action="/<?=WEBROOT2?>/monstres/addCom/<?=$mtr->Id_Page?>" method="post">
    				<textarea class="form-control"  placeholder="Ecrire un doux et merveilleux commentaire" name="Text_Commentaire" rows="1"></textarea>
    				<br/>
@@ -76,16 +79,18 @@
 			<hr>
 
 			<?php
-
+		}
 			foreach ($commentaires as $com) {
 				echo "<div>";
 				echo $com->pseudo;
 				echo " : ";
 				echo $com->Text_Commentaire;
 				echo $com->Date_Commentaire;
+			if(isset($_SESSION['compte'])){
 				if($_SESSION['compte']->Droit_Compte == 1){
 					echo "<a href='/".WEBROOT2."/monstres/delCom/".$mtr->Id_Page."&idD=".$com->Id_Commentaire."' onclick=\"return confirm('Voulez vous vraiment supprimer ce commentaire?');\"><i class='fas fa-trash-alt'></i></a></td>";
 				}
+			}
 				echo "</div>";
 			}
 
