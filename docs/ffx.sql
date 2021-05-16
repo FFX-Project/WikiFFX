@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 13 mai 2021 à 09:47
+-- Généré le :  Dim 16 mai 2021 à 11:24
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 DROP DATABASE IF EXISTS FFX;
@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `a` (
 --
 
 INSERT INTO `a` (`Id_Page`, `Id_Page_1`) VALUES
-(65, 57),
-(56, 66);
+(3, 2),
+(1, 4);
 
 -- --------------------------------------------------------
 
@@ -57,8 +57,8 @@ INSERT INTO `a` (`Id_Page`, `Id_Page_1`) VALUES
 DROP TABLE IF EXISTS `commentaire`;
 CREATE TABLE IF NOT EXISTS `commentaire` (
   `Id_Commentaire` int(11) NOT NULL AUTO_INCREMENT,
-  `Text_Commentaire` varchar(255) DEFAULT NULL,
-  `Date_Commentaire` datetime,
+  `Text_Commentaire` text,
+  `Date_Commentaire` datetime DEFAULT NULL,
   `Id_Page` int(11) DEFAULT NULL,
   `Id_Commentaire_1` int(11) DEFAULT NULL,
   `Id_Compte` int(11) NOT NULL,
@@ -134,8 +134,8 @@ CREATE TABLE IF NOT EXISTS `item_clef` (
 --
 
 INSERT INTO `item_clef` (`Id_Page`, `Id_Location`) VALUES
-(67, 57),
-(69, 57);
+(5, 2),
+(6, 2);
 
 -- --------------------------------------------------------
 
@@ -154,8 +154,8 @@ CREATE TABLE IF NOT EXISTS `location` (
 --
 
 INSERT INTO `location` (`Id_Page`) VALUES
-(57),
-(66);
+(2),
+(4);
 
 -- --------------------------------------------------------
 
@@ -171,8 +171,8 @@ CREATE TABLE IF NOT EXISTS `monstre` (
   `Chance_Monstre` int(11) DEFAULT NULL,
   `Defence_Monstre` int(11) DEFAULT NULL,
   `DefenceMagique_Monstre` int(11) DEFAULT NULL,
-  `Agi_Monstre` varchar(50) DEFAULT NULL,
-  `Esquive_Monstre` varchar(50) DEFAULT NULL,
+  `Agi_Monstre` int(11) DEFAULT NULL,
+  `Esquive_Monstre` int(11) DEFAULT NULL,
   `Mp_Monstre` int(11) DEFAULT NULL,
   `Force_Monstre` int(11) DEFAULT NULL,
   `Magie_Monstre` int(11) DEFAULT NULL,
@@ -187,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `monstre` (
 --
 
 INSERT INTO `monstre` (`Id_Page`, `Hp_Monstre`, `Accuracy_Monstre`, `Chance_Monstre`, `Defence_Monstre`, `DefenceMagique_Monstre`, `Agi_Monstre`, `Esquive_Monstre`, `Mp_Monstre`, `Force_Monstre`, `Magie_Monstre`, `Overkill_Monstre`, `Gil_Monstre`, `XP_Monstre`) VALUES
-(56, 6000, 0, 15, 1, 40, '18', '0', 480, 38, 26, 4060, 1100, 1300),
-(65, 750, 10, 15, 15, 5, '15', '15', 10, 10, 8, 300, 100, 3);
+(1, 6000, 0, 15, 1, 40, 18, 0, 480, 38, 26, 4060, 1100, 1300),
+(3, 750, 10, 15, 15, 5, 15, 15, 10, 10, 8, 300, 100, 3);
 
 -- --------------------------------------------------------
 
@@ -211,14 +211,14 @@ CREATE TABLE IF NOT EXISTS `ont` (
 --
 
 INSERT INTO `ont` (`Id_Page`, `Id_Elementaire`, `Id_Variante`) VALUES
-(56, 1, 2),
-(65, 1, 2),
-(56, 2, 2),
-(65, 2, 2),
-(56, 3, 4),
-(65, 3, 2),
-(56, 4, 4),
-(65, 4, 2);
+(1, 1, 2),
+(3, 1, 2),
+(1, 2, 2),
+(3, 2, 2),
+(1, 3, 4),
+(3, 3, 2),
+(1, 4, 4),
+(3, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -233,19 +233,19 @@ CREATE TABLE IF NOT EXISTS `page` (
   `Image_Page` varchar(50) DEFAULT NULL,
   `Description_Page` mediumtext,
   PRIMARY KEY (`Id_Page`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `page`
 --
 
 INSERT INTO `page` (`Id_Page`, `Nom_Page`, `Image_Page`, `Description_Page`) VALUES
-(56, 'Couguar', 'monstre_56.webp', 'Le Couguar est un ennemi de Final Fantasy X rencontrÃ© sur la plaine FÃ©licitÃ© et dans la grotte du Priant volÃ©.'),
-(57, 'Besaid', 'location_57.webp', 'La premiÃ¨re visite de l\'Ã®le de Besaid se situe au dÃ©but du jeu, aprÃ¨s que la barge des Al Bheds se fasse attaquer par Sin. Tidus se rÃ©veille dans l\'eau, prÃ¨s de la plage oÃ¹ l\'Ã©quipe des Besaid Aurochs s\'entraÃ®ne. AprÃ¨s une dÃ©monstration de blitzball, Tidus fait la connaissance de Wakka, capitaine et entraineur de l\'Ã©quipe.. Ce dernier l\'emmÃ¨ne au village et lui prÃ©sente l\'Ã®le.\r\n\r\nUne fois arrivÃ©, Wakka quitte Tidus. Ce dernier visite alors le village, rencontre Luzzu et Gatta, les Bannisseurs et s\'endort chez Wakka. Ã€ son rÃ©veil, Tidus entend parler d\'un Invokeur qui n\'est pas encore revenu du temple. Il se rend dans la salle de l\'Ã©preuve, contre l\'avis de Wakka et des prÃªtres. AprÃ¨s l\'avoir parcourue, il se retrouve dans l\'antichambre oÃ¹ il rencontre Lulu et Kimahri, deux gardiens.'),
-(65, 'Kimahri', 'monstre_65.webp', 'Kimahri Ronso est un personnage jouable dans Final Fantasy X et un personnage non-jouable dans Final Fantasy X-2. Membre de la tribu des Ronsos, il est taciturne, Ã  cause de la honte d\'avoir eu sa corne brisÃ©e par un autre Ronso. Protecteur de Yuna depuis son enfance, il devient un Gardien pendant son pÃ¨lerinage.'),
-(66, 'Plaine FÃ©licitÃ©', 'location_66.webp', 'C\'est une vaste Ã©tendue bordÃ©e Ã  l\'est et Ã  l\'ouest par des falaises, au nord par un prÃ©cipice et au sud par la forÃªt de Macalania. Ã€ partir de la sortie de la forÃªt on y accÃ¨de par un large chemin qui descend en pente douce. Un chemin Ã©troit et encaissÃ© au nord-est de la plaine mÃ¨ne Ã  la grotte du Priant volÃ© et au mont Gagazet.\r\n\r\nC\'est une plaine dÃ©solÃ©e oÃ¹ Ã©mergent Ã§Ã  et lÃ  des aiguilles en pierre. Dans Final Fantasy X la seule implantation humaine est un campement au centre de la plaine, oÃ¹ se situe un magasin pour les voyageurs. On y trouve Ã©galement une Ã©leveuse de chocobos qui peut prÃªter un chocobo et organise un entrainement pour apprendre Ã  le monter. Dans Final Fantasy X-2 le comptoir bleu et le comptoir argent y organisent des jeux.'),
-(67, 'Livre Al Bhed II', 'item_clef_67.webp', 'Translates Y to A'),
-(69, 'Symbole Lunaire', 'item_clef_69.webp', 'Active partiellement le Nirvana de Yuna. TrouvÃ© sur la plage de Besaid');
+(1, 'Couguar', 'monstre_1.webp', 'Le Couguar est un ennemi de Final Fantasy X rencontrÃ© sur la plaine FÃ©licitÃ© et dans la grotte du Priant volÃ©.'),
+(2, 'Besaid', 'location_2.webp', 'La premiÃ¨re visite de l\'Ã®le de Besaid se situe au dÃ©but du jeu, aprÃ¨s que la barge des Al Bheds se fasse attaquer par Sin. Tidus se rÃ©veille dans l\'eau, prÃ¨s de la plage oÃ¹ l\'Ã©quipe des Besaid Aurochs s\'entraÃ®ne. AprÃ¨s une dÃ©monstration de blitzball, Tidus fait la connaissance de Wakka, capitaine et entraineur de l\'Ã©quipe.. Ce dernier l\'emmÃ¨ne au village et lui prÃ©sente l\'Ã®le.\r\n\r\nUne fois arrivÃ©, Wakka quitte Tidus. Ce dernier visite alors le village, rencontre Luzzu et Gatta, les Bannisseurs et s\'endort chez Wakka. Ã€ son rÃ©veil, Tidus entend parler d\'un Invokeur qui n\'est pas encore revenu du temple. Il se rend dans la salle de l\'Ã©preuve, contre l\'avis de Wakka et des prÃªtres. AprÃ¨s l\'avoir parcourue, il se retrouve dans l\'antichambre oÃ¹ il rencontre Lulu et Kimahri, deux gardiens.'),
+(3, 'Kimahri', 'monstre_3.webp', 'Kimahri Ronso est un personnage jouable dans Final Fantasy X et un personnage non-jouable dans Final Fantasy X-2. Membre de la tribu des Ronsos, il est taciturne, Ã  cause de la honte d\'avoir eu sa corne brisÃ©e par un autre Ronso. Protecteur de Yuna depuis son enfance, il devient un Gardien pendant son pÃ¨lerinage.'),
+(4, 'Plaine FÃ©licitÃ©', 'location_4.webp', 'C\'est une vaste Ã©tendue bordÃ©e Ã  l\'est et Ã  l\'ouest par des falaises, au nord par un prÃ©cipice et au sud par la forÃªt de Macalania. Ã€ partir de la sortie de la forÃªt on y accÃ¨de par un large chemin qui descend en pente douce. Un chemin Ã©troit et encaissÃ© au nord-est de la plaine mÃ¨ne Ã  la grotte du Priant volÃ© et au mont Gagazet.\r\n\r\nC\'est une plaine dÃ©solÃ©e oÃ¹ Ã©mergent Ã§Ã  et lÃ  des aiguilles en pierre. Dans Final Fantasy X la seule implantation humaine est un campement au centre de la plaine, oÃ¹ se situe un magasin pour les voyageurs. On y trouve Ã©galement une Ã©leveuse de chocobos qui peut prÃªter un chocobo et organise un entrainement pour apprendre Ã  le monter. Dans Final Fantasy X-2 le comptoir bleu et le comptoir argent y organisent des jeux.'),
+(5, 'Livre Al Bhed II', 'item_clef_5.webp', 'Translates Y to A'),
+(6, 'Symbole Lunaire', 'item_clef_6.webp', 'Active partiellement le Nirvana de Yuna. TrouvÃ© sur la plage de Besaid');
 
 -- --------------------------------------------------------
 
@@ -256,7 +256,7 @@ INSERT INTO `page` (`Id_Page`, `Nom_Page`, `Image_Page`, `Description_Page`) VAL
 DROP TABLE IF EXISTS `varianteelem`;
 CREATE TABLE IF NOT EXISTS `varianteelem` (
   `Id_Variante` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom_Variante` mediumtext NOT NULL,
+  `Nom_Variante` varchar(50) NOT NULL,
   PRIMARY KEY (`Id_Variante`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
