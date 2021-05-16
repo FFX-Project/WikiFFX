@@ -8,6 +8,11 @@ class compte extends Model {
 		));
 	}
 
+	function getDetails($id){
+		return $this->findFirst(array(
+			"condition"=>"compte.Id_Compte=".$id,
+			"order"=> "compte.Id_Compte"));
+	}
 	function getPseudo($id){
 		return $this->findFirst(array(
 			"fields"=>"Pseudo_Compte",
@@ -21,6 +26,11 @@ class compte extends Model {
 			"condition" => "Compte.Pseudo_Compte LIKE '%".$nom."%'",
 			"order" => 'Compte.Id_Compte ASC',
 		));
+	}
+
+	function deleteU($id){
+		$this->id=$id;
+		return $this->delete(array("IdDel"=> "Id_Compte"));
 	}
 }
 ?>

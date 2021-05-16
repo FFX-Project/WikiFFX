@@ -33,6 +33,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="/<?=WEBROOT2?>/items_clefs">Items clefs <span class="sr-only"></span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/<?=WEBROOT2?>/comptes/user/<?=$_SESSION['compte']->Id_Compte?>">Compte <span class="sr-only"></span></a>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="/<?=WEBROOT2?>/search/">
       <input class="form-control mr-sm-2" name="q" type="search" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>" placeholder="Recherche..." aria-label="Search">

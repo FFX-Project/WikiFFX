@@ -64,7 +64,30 @@ class comptes extends controller {
 		}
 	}
 
+	function user($id){
+		$this->loadModel('compte');
+		$this->layout='log';
+		$d = array();
+		$d['user'] = $this->compte->getDetails($id);
+		$this->set($d);
+		$this->render('user');
+	}
 
+	function deleteUser($id)
+	{
+		$this->loadModel('compte');
+		if($this->compte->deleteU($id)){
+				$this->Session->setFlash("Votre compte a bien était effacer !", "success");
+				$this->logout();
+			}else
+			{
+				$d = array();
+				$d['user'] = $this->compte->getDetails($id);
+				$this->Session->setFlash("Votre compte n'a pas pu être effacer", "danger");
+				$this->set($d);
+				$this->render('user');
+			}
+	}
 	function logout() {
 		unset($_SESSION['compte']);
 		$this->layout='default';
