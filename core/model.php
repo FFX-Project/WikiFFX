@@ -39,9 +39,9 @@
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
 			if ($sth->execute(array(':id' => $this->id))) {
 				$data = $sth->fetch(PDO::FETCH_OBJ);
-				echo "<PRE>";
+				/*echo "<PRE>";
 				print_r($data);
-				echo "</PRE>";
+				echo "</PRE>";*/
 				foreach ($data as $key=>$value) {
 					//on peut créer "à la volée" les propriété de la classe
 					$this->$key = $value;
@@ -87,14 +87,14 @@
 
 				//exécution SQL
 				if ($sth->execute($data)) {
-					echo "insertion ok id :".$this->db->lastInsertId();
+					//echo "insertion ok id :".$this->db->lastInsertId();
 					$this->id=$this->db->lastInsertId();
 				} else {
 					echo "<br /> erreur SQL";
 				}
 
 			} else {
-				echo "update";
+				//echo "update";
 				// echo "<PRE>";
 				// print_r($data);
 				// echo "</PRE>";
@@ -117,7 +117,7 @@
 
 				//exécution SQL
 				if ($sth->execute($data)) {
-					echo "mise à jour ok ";
+					//echo "mise à jour ok ";
 				} else {
 					echo "<br /> erreur SQL";
 				}
@@ -234,7 +234,7 @@
 
 			//exécution SQL
 			if ($sth->execute($data)) {
-				echo "insertion ok id :".$this->db->lastInsertId();
+				//echo "insertion ok id :".$this->db->lastInsertId();
 				$this->id=$this->db->lastInsertId();
 			} else {
 				echo "<br /> erreur SQL";
@@ -249,7 +249,7 @@
 			if($Nid == null) {
 				$Nid = "Id_Page";
 			}
-			echo "update";
+			//echo "update";
 			// echo "<PRE>";
 			// print_r($data);
 			// echo "</PRE>";
@@ -275,7 +275,7 @@
 
 			//exécution SQL
 			if ($sth->execute($data)) {
-				echo "mise à jour ok ";
+				//echo "mise à jour ok ";
 			} else {
 				echo "<br /> erreur SQL";
 			}
@@ -299,7 +299,7 @@
 			}
 			/* Exécute une requête préparée en passant un tableau de valeurs */
 			$sql = 'DELETE FROM '.$from.' WHERE ' .$IdDel.' = :id AND '.$and.' = :id2';
-			echo $sql;
+			//echo $sql;
 			//préparation PDO
 			$sth = $this->db->prepare($sql);
 			//chargement du résultat de la requete SQL en mémoire dans un curseur
@@ -317,16 +317,16 @@
 			$sth = $this->db->prepare($sql);
 			$sth->execute();
 			$id = $sth->fetchAll(PDO::FETCH_OBJ);
-			print_r($id);
+			//print_r($id);
 			return $id;
 		}
 
 		function getDateNow(){
-		 $sql =	' SELECT NOW() AS Date';
-		 $sth = $this->db->prepare($sql);
-		 $sth->execute();
-		 $date = $sth->fetchAll(PDO::FETCH_OBJ);
-		 return $date;
-	 }
+		 	$sql =	' SELECT NOW() AS Date';
+		 	$sth = $this->db->prepare($sql);
+		 	$sth->execute();
+		 	$date = $sth->fetchAll(PDO::FETCH_OBJ);
+		 	return $date;
+	 	}
 	}
 ?>
