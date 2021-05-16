@@ -287,9 +287,11 @@ class monstres extends controller {
 		$d = array();
 		$date = $this->commentary->getDateNow();
 		$add = array("Text_Commentaire"=>$_POST['Text_Commentaire'],"Date_Commentaire"=>$date[0]->Date, "Id_Page"=>$id, "Id_Compte"=>$_SESSION['compte']->Id_Compte);
-		//echo "<pre>";
-		//print_r($add);
-		//echo "</pre>";
+
+		/*echo "<pre>";
+		print_r($add);
+		echo "</pre>";*/
+
 		$this->commentary->save($add);
 		$d['mtr'] = $this->monstre->getDetail($id);
 		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);

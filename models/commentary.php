@@ -6,7 +6,7 @@ class commentary extends Model {
 	function getPageCommentaire($id){
 		return $this->find(array(
 			"condition" => "commentaire.Id_Page = ".$id,
-			"order" => 'commentaire.Id_Page ASC',
+			"order" => 'commentaire.Date_Commentaire DESC',
 		));
 	}
 

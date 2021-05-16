@@ -34,24 +34,24 @@
 		<?php
 	}
 	if(count($commentaires) == 0){
-		?>
-		<p>Aucun commenaitre pour l'instant...</p>
-		<?php
-	} else {
-		foreach ($commentaires as $com) {
-			echo "<div>";
-			echo $com->pseudo;
-			echo " : ";
-			echo $com->Text_Commentaire;
-			echo $com->Date_Commentaire;
-		if(isset($_SESSION['compte'])){
-			if($_SESSION['compte']->Droit_Compte == 1){
-				echo "<a href='/".WEBROOT2."/items_clefs/delCom/".$item_clef->Id_Page."&idD=".$com->Id_Commentaire."' onclick=\"return confirm('Voulez vous vraiment supprimer ce commentaire?');\"><i class='fas fa-trash-alt'></i></a></td>";
+				echo "<p>Aucun commenaitre pour l'instant...</p>";
 			}
-		}
-			echo "</div>";
-		}
-	}
+			else
+			{
+				foreach ($commentaires as $com) {
+					echo "<div class='commentaire'>";
+					echo "<div class='title'>Par <b>".$com->pseudo."</b>, le ".$com->Date_Commentaire."</div>";
+					echo $com->Text_Commentaire;
+					if(isset($_SESSION['compte']))
+					{
+						if($_SESSION['compte']->Droit_Compte == 1)
+						{
+							echo "&nbsp;<a href='/".WEBROOT2."/items_clefs/delCom/".$item_clef->Id_Page."&idD=".$com->Id_Commentaire."' onclick=\"return confirm('Voulez vous vraiment supprimer ce commentaire?');\"><i class='fas fa-trash-alt'></i></a></td>";
+						}
+					}
+					echo "</div>";
+				}
+			}
 		?>
 
 

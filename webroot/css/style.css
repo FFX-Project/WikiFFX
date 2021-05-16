@@ -1,3 +1,23 @@
 html, body {
 	scroll-behavior: smooth;
 }
+.commentaire {
+	border: 1px solid grey;
+	border-radius: 5px;
+	margin-top: 10px;
+	padding: 10px;
+	box-shadow: 2px 2px 8px grey;
+}
+
+.commentaire img {
+	max-width: 100px;
+	filter: blur(0);
+}
+
+.commentaire:nth-child(2n) {
+	background-color: #EBF5FB;
+}
+
+.commentaire .title {
+	border-bottom: 1px solid grey;
+}
