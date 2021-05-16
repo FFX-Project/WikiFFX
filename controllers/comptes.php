@@ -23,7 +23,7 @@ class comptes extends controller {
 			} else
 			{
 				$this->Session->setFlash("Problème d'identifiant ou mot de passe", "danger");
-				echo "Identifiant ou mot de passe incorrect";
+			//	echo "Identifiant ou mot de passe incorrect";
 			}
 		}
 
@@ -50,10 +50,17 @@ class comptes extends controller {
 
 	function InscriptionOk(){
 		$this->loadModel('compte');
-		$this->layout='default';
-		$tab = array("Pseudo_Compte"=>$_POST['Pseudo_Compte'], "Mdp_Compte"=>md5($_POST['Mdp_Compte']), "Email_Compte"=>$_POST['Email_Compte'], "Droit_Compte"=>0 );
-		$this->compte->save($tab);
-		$this->render('index');
+		if(!$this->compte->IfPseudoExist($_POST['Pseudo_Compte'])){
+
+			$this->layout='default';
+			$tab = array("Pseudo_Compte"=>$_POST['Pseudo_Compte'], "Mdp_Compte"=>md5($_POST['Mdp_Compte']), "Email_Compte"=>$_POST['Email_Compte'], "Droit_Compte"=>0 );
+			$this->compte->save($tab);
+			$this->render('index');
+		}else {
+			$this->layout='default';
+			$this->Session->setFlash("Nom de compte déjà pris !", "danger");
+			$this->render('inscription');
+		}
 	}
 
 

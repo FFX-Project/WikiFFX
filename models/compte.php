@@ -15,5 +15,12 @@ class compte extends Model {
 			"order"=> "compte.Id_Compte"
 		));
 	}
+
+	function IfPseudoExist($nom){
+		return $this->find(array(
+			"condition" => "Compte.Pseudo_Compte LIKE '%".$nom."%'",
+			"order" => 'Compte.Id_Compte ASC',
+		));
+	}
 }
 ?>
