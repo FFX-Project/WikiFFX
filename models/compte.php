@@ -30,6 +30,7 @@ class compte extends Model {
 
 	function deleteU($id){
 		$this->id=$id;
+		$this->delete(array("IdDel"=> "Id_Compte", "from"=>"commentaire"));
 		return $this->delete(array("IdDel"=> "Id_Compte"));
 	}
 }
