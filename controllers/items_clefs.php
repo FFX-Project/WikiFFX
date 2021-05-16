@@ -44,6 +44,7 @@ class items_clefs extends controller {
 		$this->loadModel('location');
 		$this->loadModel('commentary');
 		$this->loadModel('compte');
+		//Recupère toutes les informations dans $d
 		$d['item_clef'] = $this->item_clef->getDetail($id);
 		$d['location'] = $this->location->getAll();
 		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
@@ -132,10 +133,10 @@ class items_clefs extends controller {
 							{
 								//on renseigne $_POST image pour le save
 								$_POST['Image_Page']=$nomimage;
-								echo "Upload réussi";
+								$this->Session->setFlash("Upload réussi", "success");
 							}
 							else{
-								echo "Problème lors du téléchargement";
+							  $this->Session->setFlash("Problème lors du téléchargement", "success");
 							}
 						}
 					}
@@ -194,10 +195,10 @@ class items_clefs extends controller {
 			$this->loadModel('location');
 			$ic = $this->item_clef->getImage($id);
 			if (!$this->item_clef->deleteIC($id)) {
-					echo "C PAS BON";
+				 $this->Session->setFlash("Suppression impossible", "danger");
 			} else {
 			unlink('./webroot/img/'.$ic->Image_Page);
-			echo "bravo";
+			$this->Session->setFlash("Suppression réussi", "success");
 			$d['titre'] ="Administration items clefs";
 			$this->layout='admin';
 			}
@@ -275,10 +276,10 @@ class items_clefs extends controller {
 		 //on récupére l'id a delete
 		 $idD = $_GET['idD'];
 		 if (!$this->commentary->deleteCom($idD)) {
-				 echo "C PAS BON";
+				$this->Session->setFlash("Suppression impossible", "success");
 		 } else
 		 {
-			 echo "bravo";
+			$this->Session->setFlash("Suppression réussi", "success");
 		 }
 
 		$d['item_clef'] = $this->item_clef->getDetail($id);

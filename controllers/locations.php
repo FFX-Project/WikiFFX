@@ -104,10 +104,10 @@ class locations extends controller {
 							{
 								//on renseigne $_POST image pour le save
 								$_POST['Image_Page']=$nomimage;
-								echo "Upload réussi";
+								$this->Session->setFlash("upload réussi", "success");
 							}
 							else{
-								echo "Problème lors du téléchargement";
+								$this->Session->setFlash("Problème lors du téléchargement", "danger");
 							}
 						}
 					}
@@ -149,10 +149,10 @@ class locations extends controller {
 			$this->loadModel('location');
 			$l = $this->location->getImage($id);
 			if (!$this->location->deleteLoc($id)) {
-					echo "C PAS BON";
+				$this->Session->setFlash("Suppression impossible", "danger");
 			} else {
 			unlink('./webroot/img/'.$l->Image_Page);
-			echo "bravo";
+		  $this->Session->setFlash("Suppression réussi", "success");
 			$this->layout='admin';
 			}
 		$d['locs'] = $this->location->getAll();
@@ -174,10 +174,11 @@ class locations extends controller {
 		$this->loadModel('commentary');
 		$this->loadModel('compte');
 		$d = array();
+		//Ajout du commentaire send
 		$date = $this->commentary->getDateNow();
 		$add = array("Text_Commentaire"=>$_POST['Text_Commentaire'],"Date_Commentaire"=>$date[0]->Date, "Id_Page"=>$id, "Id_Compte"=>$_SESSION['compte']->Id_Compte);
 		$this->commentary->save($add);
-
+// on affiche la view
 		$d['loc'] = $this->location->getDetail($id);
 		$d['locmtr'] = $this->location->getAllMonstre($id);
 		$d['commentaires'] = $this->commentary->getPageCommentaire($id);
@@ -215,12 +216,12 @@ class locations extends controller {
 		//on récupére l'id a delete
 		$idD = $_GET['idD'];
 		if (!$this->commentary->deleteCom($idD)) {
-				echo "C PAS BON";
+				$this->Session->setFlash("Suppression impossible", "danger");
 		} else
 		{
-			echo "bravo";
+			$this->Session->setFlash("Suppression réussi", "success");
 		}
-
+// on affiche la view
 		$d['loc'] = $this->location->getDetail($id);
 		$d['locmtr'] = $this->location->getAllMonstre($id);
 		$d['commentaires'] = $this->commentary->getPageCommentaire($id);

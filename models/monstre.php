@@ -10,7 +10,7 @@ class monstre extends Model {
 			"limit"=> 'LIMIT '. $num
 		));
 	}
-
+//Récupere les détails du monstre
 	function getDetail($id){
 		return $this->findFirst(array(
 			"inner"=> 'INNER JOIN page ON monstre.Id_Page = page.Id_Page',
@@ -18,7 +18,7 @@ class monstre extends Model {
 			"condition"=> 'monstre.Id_Page ='.$id
 		));
 	}
-
+//Récupere les détails des élémentaires disponibles
 	function getDetailElementaire($id){
 		return $this->find(array(
 			"fields" => 'elementaire.Nom_Elementaire, varianteelem.Nom_Variante',
@@ -27,7 +27,7 @@ class monstre extends Model {
 			"condition" => 'monstre.Id_Page ='.$id
 		));
 	}
-
+//Récupere les détails de slieux
 	function getDetailLieux($id){
 		return $this->find(array(
 			"fields" => 'page.Id_Page, page.Nom_Page',
@@ -36,7 +36,7 @@ class monstre extends Model {
 			"condition" => 'monstre.Id_Page ='.$id
 		));
 	}
-
+//Efface le monstre, en enlevant d'abord toute les CE qui pose problème.
 	function deleteMtr($id){
 		$this->id=$id;
 		$this->delete(array("IdDel"=>"Id_Page", "from"=>"ont"));
@@ -44,7 +44,7 @@ class monstre extends Model {
 		$this->delete(array("IdDel"=>"Id_Page"));
 		return $this->delete(array("from"=>"Page","IdDel"=>"Id_Page"));
 	}
-
+//Efface les location des monstre
 	function deleteLocMtr($id, $id2){
 		$this->id=$id;
 		$this->id2 = $id2;
@@ -58,7 +58,7 @@ class monstre extends Model {
 	function getTable(){
 		return $this->table;
 	}
-
+//Ajout d'un monstre
 	function addMtr($data,$from=null, $Nid=null){
 		//Si la talbe n'est pas celle de la classe appeller
 		if($from == null){
@@ -84,10 +84,12 @@ class monstre extends Model {
 				];
 			}
 		$this->save($tab,$from,$Nid);
+		//on unset de $data toutes les informations inutile
 		unset($data['Nom_Page']);
 		unset($data['Description_Page']);
 		unset($data['Image_Page']);
 		$data['Id_Page'] = $this->id;
+		//on remplit le tableau pour la table monstre
 		$tab = [
 			'Id_Page' => $data['Id_Page'],
 			'Hp_Monstre' => $data['Hp_Monstre'],
@@ -119,6 +121,7 @@ class monstre extends Model {
 		unset($data['Gil_Monstre']);
 		unset($data['XP_Monstre']);
 		$from = "ont";
+			//on remplit le tableau pour la table ont
 		$tab = [
 			'Id_Page' => $data['Id_Page'],
 			'Id_Elementaire' => 1,
@@ -146,9 +149,10 @@ class monstre extends Model {
 			'Id_Variante' => $data['Eau'],
 		];
 		$this->addContenu($tab,$from);
-		unset($data['Eau']);;
+		unset($data['Eau']);
 		$tab = $data['Id_Location'];
 		$from = "a";
+			//on remplit le tableau pour la table a
 		for ($i=0; $i < count($tab); $i++) {
 			print($tab[$i]);
 			$tab² = [

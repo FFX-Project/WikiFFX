@@ -24,7 +24,7 @@
     echo '  <td><img src="/'.WEBROOT2.'/webroot/img/'.$l->Image_Page.'" width="100" /></td>';
 		echo '  <td>'.$l->Description_Page.'</td>';
     echo "  <td><a href='/".WEBROOT2."/locations/adminEdit/".$l->Id_Page."'><i class='fas fa-edit'></i></a></td> ";
-		echo "  <td><a href='/".WEBROOT2."/locations/adminDelete/".$l->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette catégorie?');\"><i class='fas fa-trash-alt'></i></a></td>";
+		echo "  <td><a href='/".WEBROOT2."/locations/adminDelete/".$l->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette location?');\"><i class='fas fa-trash-alt'></i></a></td>";
 		echo '  <td></td>';
 		echo '</tr>';
 	}

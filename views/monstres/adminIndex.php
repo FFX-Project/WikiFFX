@@ -17,7 +17,7 @@
     echo '  <td><img src="/'.WEBROOT2.'/webroot/img/'.$m->Image_Page.'" width="100" /></td>';
 		echo '  <td>';
     echo "  <td><a href='/".WEBROOT2."/monstres/adminEdit/".$m->Id_Page."'><i class='fas fa-edit'></i></a></td> ";
-    echo "  <td><a href='/".WEBROOT2."/monstres/adminDelete/".$m->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette catégorie?');\"><i class='fas fa-trash-alt'></i></a></td>";
+    echo "  <td><a href='/".WEBROOT2."/monstres/adminDelete/".$m->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer ce monstre?');\"><i class='fas fa-trash-alt'></i></a></td>";
     echo "  <td><a href='/".WEBROOT2."/monstres/adminGestionLoc/".$m->Id_Page."'><i class='fas fa-edit'></i></a></td> ";
     echo '  <td></td>';
 		echo '</tr>';
