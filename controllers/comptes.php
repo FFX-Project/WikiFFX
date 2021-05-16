@@ -43,6 +43,19 @@ class comptes extends controller {
 
 	}
 
+	function inscription(){
+		$this->layout='default';
+		$this->render('inscription');
+	}
+
+	function InscriptionOk(){
+		$this->loadModel('compte');
+		$this->layout='default';
+		$tab = array("Pseudo_Compte"=>$_POST['Pseudo_Compte'], "Mdp_Compte"=>md5($_POST['Mdp_Compte']), "Email_Compte"=>$_POST['Email_Compte'], "Droit_Compte"=>0 );
+		$this->compte->save($tab);
+		$this->render('index');
+	}
+
 
 	function logout() {
 		unset($_SESSION['compte']);
