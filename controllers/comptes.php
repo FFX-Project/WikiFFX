@@ -2,7 +2,7 @@
 class comptes extends controller {
 
 	var $models = array("compte");
-
+//renvoie vers la vue index
 	function index()
 	{
 		$this->loadModel('compte');
@@ -42,7 +42,7 @@ class comptes extends controller {
 		}
 
 	}
-
+//renvoie vers la vue inscription
 	function inscription(){
 		$this->layout='default';
 		$this->render('inscription');
@@ -50,13 +50,14 @@ class comptes extends controller {
 
 	function InscriptionOk(){
 		$this->loadModel('compte');
+		//Si n'existe pas
 		if(!$this->compte->IfPseudoExist($_POST['Pseudo_Compte'])){
-
 			$this->layout='default';
 			$tab = array("Pseudo_Compte"=>$_POST['Pseudo_Compte'], "Mdp_Compte"=>md5($_POST['Mdp_Compte']), "Email_Compte"=>$_POST['Email_Compte'], "Droit_Compte"=>0 );
 			$this->compte->save($tab);
 			$this->render('index');
-		}else {
+		}//Si le pseudo existe
+		else {
 			$this->layout='default';
 			$this->Session->setFlash("Nom de compte déjà pris !", "danger");
 			$this->render('inscription');

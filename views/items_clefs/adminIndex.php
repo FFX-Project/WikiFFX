@@ -26,7 +26,7 @@
     echo '   <td><a href="/'.WEBROOT2.'/locations/view/'.$ic->Id_Location.'">'.$ic->nom_location.'</td>';
 		echo '  <td>'.$ic->Description_Page.'</td>';
     echo "  <td><a href='/".WEBROOT2."/items_clefs/adminEdit/".$ic->Id_Page."'><i class='fas fa-edit'></i></a></td> ";
-		echo "  <td><a href='/".WEBROOT2."/items_clefs/adminDelete/".$ic->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette catégorie?');\"><i class='fas fa-trash-alt'></i></a></td>";
+		echo "  <td><a href='/".WEBROOT2."/items_clefs/adminDelete/".$ic->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette item clef?');\"><i class='fas fa-trash-alt'></i></a></td>";
 		echo '  <td></td>';
 		echo '</tr>';
 	}

@@ -18,7 +18,7 @@
 		echo '  <td>'.$l->Id_Page.'</td>';
     echo '  <td>'.$l->Nom_Page.'</td>';
 		echo '  <td>';
-    echo "  <td><a href='/".WEBROOT2."/monstres/adminDeleteLoc/".$mtr->Id_Page."&id2=" .$l->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette catégorie?');\"><i class='fas fa-trash-alt'></i></a></td>";
+    echo "  <td><a href='/".WEBROOT2."/monstres/adminDeleteLoc/".$mtr->Id_Page."&id2=" .$l->Id_Page."' onclick=\"return confirm('Voulez vous vraiment supprimer cette location?');\"><i class='fas fa-trash-alt'></i></a></td>";
     echo '  <td></td>';
 		echo '</tr>';
 	}

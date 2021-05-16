@@ -311,7 +311,7 @@
 				return false;
 			}
 		}
-
+//Récupere l'id max trouvable dans la table PAGE
 		 function getMaxId(){
 			$sql =	' SELECT MAX(Id_Page) AS idMax FROM page';
 			$sth = $this->db->prepare($sql);
@@ -320,7 +320,7 @@
 			print_r($id);
 			return $id;
 		}
-
+//Récupere la date de maintenant
 		function getDateNow(){
 		 $sql =	' SELECT NOW() AS Date';
 		 $sth = $this->db->prepare($sql);

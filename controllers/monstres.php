@@ -78,7 +78,7 @@ class monstres extends controller {
 
 
 			$this->layout='admin';
-			//on rend la vue --> index
+			//on rend la vue --> adminIndex
 			$this->render('adminIndex');
 		}
 	}
@@ -117,10 +117,10 @@ class monstres extends controller {
 							{
 								//on renseigne $_POST image pour le save
 								$_POST['Image_Page']=$nomimage;
-								echo "Upload réussi";
+								$this->Session->setFlash("Upload réussi", "success");
 							}
 							else{
-								echo "Problème lors du téléchargement";
+								$this->Session->setFlash("Un problème est survenu", "danger");
 							}
 						}
 					}
@@ -169,14 +169,17 @@ class monstres extends controller {
 	}
 
 	function adminDelete($id) {
+		//on vérifié les droits
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('monstre');
+			// on récupere l'image
 			$mtr = $this->monstre->getImage($id);
 			if (!$this->monstre->deleteMtr($id)) {
-					echo "C PAS BON";
+				$this->Session->setFlash("Suppression impossible", "danger");
 			} else {
+				//On éfface l'image du monstre dans webroot
 			unlink('./webroot/img/'.$mtr->Image_Page);
-			echo "bravo";
+		  $this->Session->setFlash("Suppression réussi", "success");
 			$d['titre'] ="Administration des monstres";
 			$this->layout='admin';
 			}
@@ -208,26 +211,27 @@ class monstres extends controller {
 			$this->render('adminGestionLoc');
 		}
 	}
-
+//on récupere l'id de la view à afficher
 	function adminDeleteLoc($id){
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->loadModel('monstre');
+			//on récupére l'id a delete
 			$id2 = $_GET['id2'];
 			if (!$this->monstre->deleteLocMtr($id, $id2)) {
-					echo "C PAS BON";
+				$this->Session->setFlash("Suppression impossible", "danger");
 			} else {
-			echo "bravo";
-			$d['titre'] ="Administration des locations des monstres";
-			$this->layout='admin';
+			  $this->Session->setFlash("Suppression réussi", "success");
+				$d['titre'] ="Administration des locations des monstres";
+				$this->layout='admin';
 			}
 			$d['mtr'] = $this->monstre->getDetail($id);
 			$d['mtrlieu'] = $this->monstre->getDetailLieux($id);
 
 			$this->set($d);
-		 $this->render('adminGestionLoc');
+	 	 $this->render('adminGestionLoc');
 		}
 	}
-
+//Cette fonction a pour but de lier les monstres avec certaines location.
 	function adminAddLoc($id=null){
 			if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			if(empty($_POST)){
@@ -267,7 +271,7 @@ class monstres extends controller {
 			}
 		}
 	}
-
+//Ajout d'un commentaire
 	function addCom($id){
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->layout='admin';
@@ -283,9 +287,9 @@ class monstres extends controller {
 		$d = array();
 		$date = $this->commentary->getDateNow();
 		$add = array("Text_Commentaire"=>$_POST['Text_Commentaire'],"Date_Commentaire"=>$date[0]->Date, "Id_Page"=>$id, "Id_Compte"=>$_SESSION['compte']->Id_Compte);
-		echo "<pre>";
-		print_r($add);
-		echo "</pre>";
+		//echo "<pre>";
+		//print_r($add);
+		//echo "</pre>";
 		$this->commentary->save($add);
 		$d['mtr'] = $this->monstre->getDetail($id);
 		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);
@@ -313,7 +317,7 @@ class monstres extends controller {
 
 		$this->render('view');
 	}
-
+//Efface un commentaire choisi
 	function delCom($id){
 		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
 			$this->layout='admin';
@@ -328,14 +332,13 @@ class monstres extends controller {
 		$this->loadModel('compte');
 		$d = array();
 		$idD = $_GET['idD'];
-		echo ($idD);
-		echo ("aaa");
-		echo ($id);
+		//echo ($idD);
+		//echo ($id);
 		if (!$this->commentary->deleteCom($idD)) {
-				echo "C PAS BON";
+				$this->Session->setFlash("Suppression impossible", "danger");
 		} else
 		{
-			echo "bravo";
+			$this->Session->setFlash("Suppression réussi", "success");
 		}
 		$d['mtr'] = $this->monstre->getDetail($id);
 		$d['mtrelem'] = $this->monstre->getDetailElementaire($id);

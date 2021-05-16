@@ -15,7 +15,7 @@ class compte extends Model {
 			"order"=> "compte.Id_Compte"
 		));
 	}
-
+//Vérifie si le pseudo existe déjà
 	function IfPseudoExist($nom){
 		return $this->find(array(
 			"condition" => "Compte.Pseudo_Compte LIKE '%".$nom."%'",
