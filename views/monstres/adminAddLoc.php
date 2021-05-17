@@ -14,12 +14,12 @@
 			<div class="form-group">
 				<label for="Id_Page_1">Nom des locations à lié</label><br/>
 				<select name='Id_Page_1' >
-					<?php
-				 foreach ($locs as $l)
-				 {
-					 echo '<option value ="'.$l->Id_Page.'">'.$l->Nom_Page.'</option>';
-				 }
-					?>
+				<?php
+				foreach ($locs as $l)
+				{
+					echo '<option value ="'.$l->Id_Page.'">'.$l->Nom_Page.'</option>';
+				}
+				?>
 				</select>
 			</div>
 		 	<button type="submit" class="btn btn-primary">Valider</button>
