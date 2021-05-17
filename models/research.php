@@ -1,16 +1,19 @@
 <?php
-class research extends Model {
+class research extends Model
+{
 
 	var $table = "page";
 
-	function getRecherche($recherche){
+	function getRecherche($recherche)
+	{
 		return $this->find(array(
 			"condition" => "page.Nom_Page LIKE '%".$recherche."%'",
 			"order" => 'page.Id_Page ASC',
 		));
 	}
 
-	function getMonstre($id){
+	function getMonstre($id)
+	{
 		return $this->findFirst(array(
 			"fields" => 'monstre.Id_Page',
 			"inner" => 'INNER JOIN monstre ON page.Id_Page = monstre.Id_Page',
@@ -19,7 +22,8 @@ class research extends Model {
 		));
 	}
 
-	function getLocation($id){
+	function getLocation($id)
+	{
 		return $this->findFirst(array(
 			"fields" => 'location.Id_Page',
 			"inner" => 'INNER JOIN location ON page.Id_Page = location.Id_Page',
@@ -28,7 +32,8 @@ class research extends Model {
 		));
 	}
 
-	function getItemClef($id){
+	function getItemClef($id)
+	{
 		return $this->findFirst(array(
 			"fields" => 'item_clef.Id_Page',
 			"inner" => 'INNER JOIN item_clef ON page.Id_Page = item_clef.Id_Page',

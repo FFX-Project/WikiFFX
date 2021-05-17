@@ -1,12 +1,19 @@
 <?php
-class search extends controller {
+class search extends controller
+{
 
-	function index() {
-		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1){
+	function index()
+	{
+		if ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 1)
+		{
 			$this->layout='admin';
-		}elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0){
+		}
+		elseif ($this->Session->isLogged() && $_SESSION['compte']->Droit_Compte == 0)
+		{
 			$this->layout="log";
-		}else{
+		}
+		else
+		{
 			$this->layout='default';
 		}
 		$d=array();
@@ -14,14 +21,18 @@ class search extends controller {
 		if (!empty($_GET['q']))
 		{
 			$d['resultat'] = $this->research->getRecherche($_GET['q']);
-			foreach ($d['resultat'] as $r) {
-				if ($this->research->getMonstre($r->Id_Page)) {
+			foreach ($d['resultat'] as $r)
+			{
+				if ($this->research->getMonstre($r->Id_Page))
+				{
 					$r->Type = "monstre";
 				}
-				else if ($this->research->getLocation($r->Id_Page)) {
+				else if ($this->research->getLocation($r->Id_Page))
+				{
 					$r->Type = "location";
 				}
-				else if ($this->research->getItemClef($r->Id_Page)) {
+				else if ($this->research->getItemClef($r->Id_Page))
+				{
 					$r->Type = "item";
 				}
 			}
@@ -41,10 +52,8 @@ class search extends controller {
 		}
 
 		$this->set($d);
-
 		$this->render('index');
 	}
-
 
 }
 ?>
