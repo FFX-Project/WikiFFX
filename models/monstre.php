@@ -1,25 +1,31 @@
 <?php
-class monstre extends Model {
+class monstre extends Model
+{
 
 	var $table = "monstre";
 
-	function getAll($num=99){
+	function getAll($num=99)
+	{
 		return $this->find(array(
 			"inner"=> 'INNER JOIN page ON monstre.Id_Page = page.Id_Page',
 			"order"=> 'page.id_Page ASC',
 			"limit"=> 'LIMIT '. $num
 		));
 	}
-//Récupere les détails du monstre
-	function getDetail($id){
+	
+	//Récupere les détails du monstre
+	function getDetail($id)
+	{
 		return $this->findFirst(array(
 			"inner"=> 'INNER JOIN page ON monstre.Id_Page = page.Id_Page',
 			"order"=> 'page.id_Page ASC',
 			"condition"=> 'monstre.Id_Page ='.$id
 		));
 	}
-//Récupere les détails des élémentaires disponibles
-	function getDetailElementaire($id){
+	
+	//Récupere les détails des élémentaires disponibles
+	function getDetailElementaire($id)
+	{
 		return $this->find(array(
 			"fields" => 'elementaire.Nom_Elementaire, varianteelem.Nom_Variante',
 			"inner" => 'INNER JOIN ont ON monstre.Id_Page = ont.Id_Page INNER JOIN elementaire ON ont.Id_Elementaire = elementaire.Id_Elementaire INNER JOIN varianteelem ON ont.Id_Variante = varianteelem.Id_Variante',
@@ -27,8 +33,10 @@ class monstre extends Model {
 			"condition" => 'monstre.Id_Page ='.$id
 		));
 	}
-//Récupere les détails de slieux
-	function getDetailLieux($id){
+
+	//Récupere les détails de slieux
+	function getDetailLieux($id)
+	{
 		return $this->find(array(
 			"fields" => 'page.Id_Page, page.Nom_Page',
 			"inner" => 'INNER JOIN a ON monstre.Id_Page = a.Id_Page INNER JOIN location ON a.Id_Page_1 = location.Id_Page INNER JOIN page ON location.Id_Page = page.Id_Page',
@@ -36,53 +44,66 @@ class monstre extends Model {
 			"condition" => 'monstre.Id_Page ='.$id
 		));
 	}
-//Efface le monstre, en enlevant d'abord toute les CE qui pose problème.
-	function deleteMtr($id){
+	
+	//Efface le monstre, en enlevant d'abord toute les CE qui pose problème.
+	function deleteMtr($id)
+	{
 		$this->id=$id;
 		$this->delete(array("IdDel"=>"Id_Page", "from"=>"ont"));
 		$this->delete(array("IdDel"=>"Id_Page", "from"=>"a"));
 		$this->delete(array("IdDel"=>"Id_Page"));
 		return $this->delete(array("from"=>"Page","IdDel"=>"Id_Page"));
 	}
-//Efface les location des monstre
-	function deleteLocMtr($id, $id2){
+	
+	//Efface les location des monstre
+	function deleteLocMtr($id, $id2)
+	{
 		$this->id=$id;
 		$this->id2 = $id2;
 		return $this->deleteGestLoc(array("IdDel"=>"Id_Page", "from"=>"a", "and"=>"Id_Page_1"));
 	}
 
-	function getImage($id){
+	function getImage($id)
+	{
 		return $this->findFirst(array("fields"=>'Page.Image_Page', "from"=>'Page',"condition"=>'Id_Page='.$id));
 	}
 
-	function getTable(){
+	function getTable()
+	{
 		return $this->table;
 	}
-//Ajout d'un monstre
-	function addMtr($data,$from=null, $Nid=null){
+
+	//Ajout d'un monstre
+	function addMtr($data,$from=null, $Nid=null)
+	{
 		//Si la talbe n'est pas celle de la classe appeller
-		if($from == null){
+		if($from == null)
+		{
 			$from ="".$this->table."";
 		}
 		//Permet de modifier l'id des updates si elle ne ce nomme pas id.
-		if($Nid == null) {
+		if($Nid == null)
+		{
 			$Nid = "Id_Monstre";
 		}
 		//initialise le remplissage de la table PAGE
-		if(empty($data['Image_Page'])){
+		if(empty($data['Image_Page']))
+		{
 			$tab = [
 				'id' => $data['id'],
 				'Nom_Page' => $data['Nom_Page'],
 				'Description_Page' => $data['Description_Page'],
 			];
-		} else {
-				$tab = [
-					'id' => $data['id'],
-					'Nom_Page' => $data['Nom_Page'],
-					'Description_Page' => $data['Description_Page'],
-					'Image_Page' => $data['Image_Page'],
-				];
-			}
+		}
+		else
+		{
+			$tab = [
+				'id' => $data['id'],
+				'Nom_Page' => $data['Nom_Page'],
+				'Description_Page' => $data['Description_Page'],
+				'Image_Page' => $data['Image_Page'],
+			];
+		}
 		$this->save($tab,$from,$Nid);
 		//on unset de $data toutes les informations inutile
 		unset($data['Nom_Page']);
@@ -121,7 +142,7 @@ class monstre extends Model {
 		unset($data['Gil_Monstre']);
 		unset($data['XP_Monstre']);
 		$from = "ont";
-			//on remplit le tableau pour la table ont
+		//on remplit le tableau pour la table ont
 		$tab = [
 			'Id_Page' => $data['Id_Page'],
 			'Id_Elementaire' => 1,
@@ -152,8 +173,9 @@ class monstre extends Model {
 		unset($data['Eau']);
 		$tab = $data['Id_Location'];
 		$from = "a";
-			//on remplit le tableau pour la table a
-		for ($i=0; $i < count($tab); $i++) {
+		//on remplit le tableau pour la table a
+		for ($i=0; $i < count($tab); $i++)
+		{
 			print($tab[$i]);
 			$tab² = [
 				'Id_Page' => $data['Id_Page'],
@@ -161,25 +183,31 @@ class monstre extends Model {
 			];
 			$this->addContenu($tab²,$from);
 		}
-
 	}
-//Permet de mettre à jour les items clefs, Recupere le $data avec toutes les données puis les scinde pour chaque tables.
-	function UpdateMtr($data,$from=null, $Nid=null){
-		if($from == null){
+	
+	//Permet de mettre à jour les items clefs, Recupere le $data avec toutes les données puis les scinde pour chaque tables.
+	function UpdateMtr($data,$from=null, $Nid=null)
+	{
+		if($from == null)
+		{
 			$from ="".$this->table."";
 		}
 		//Permet de modifier l'id des updates si elle ne ce nomme pas id.
-		if($Nid == null) {
+		if($Nid == null)
+		{
 			$Nid = "id";
 		}
 		//vérifie si l'image doit être mis à jour ou non
-	if(empty($data['Image_Page'])){
-		$tab = [
-			'id' => $data['id'],
-			'Nom_Page' => $data['Nom_Page'],
-			'Description_Page' => $data['Description_Page'],
-		];
-	} else {
+		if(empty($data['Image_Page']))
+		{
+			$tab = [
+				'id' => $data['id'],
+				'Nom_Page' => $data['Nom_Page'],
+				'Description_Page' => $data['Description_Page'],
+			];
+		}
+		else
+		{
 			$tab = [
 				'id' => $data['id'],
 				'Nom_Page' => $data['Nom_Page'],
@@ -223,11 +251,14 @@ class monstre extends Model {
 		$this->save($data,null,$Nid);
 	}
 
-	function addLocMtr($data, $from){
+	function addLocMtr($data, $from)
+	{
 		return $this->addContenu($data,$from);
 	}
+
 	//recupére le dernier id dans la table page + 1
-	function getNewId(){
+	function getNewId()
+	{
 		$d = $this->getMaxId();
 		$id = $d[0]->idMax + 1;
 		return $id;

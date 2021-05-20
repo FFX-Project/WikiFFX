@@ -48,7 +48,8 @@
 		<div class="col-md-12">
 			<h4><u>Lieux :</u></h4>
 			<?php
-			foreach ($mtr->lieux as $key => $value) {
+			foreach ($mtr->lieux as $key => $value)
+			{
 				?>
 				<button type="button" onclick="window.location = '/<?=WEBROOT2?>/locations/view/<?=$key?>'" class="btn btn-info"><?=$value?></button>
 				<?php
@@ -63,23 +64,27 @@
 		<div class="col-md-12">
 			<h4><u>Commentaires :</u></h4>
 			<?php
-			if(isset($_SESSION['compte'])){
-			?>
-			<form action="/<?=WEBROOT2?>/monstres/addCom/<?=$mtr->Id_Page?>" method="post">
-   				<textarea class="form-control"  placeholder="Ecrire un doux et merveilleux commentaire" name="Text_Commentaire" rows="1"></textarea>
-   				<br/>
-   				<button type="submit" class="btn btn-primary">Envoyer</button>
-			</form>
+			if(isset($_SESSION['compte']))
+			{
+
+				?>
+				<form action="/<?=WEBROOT2?>/monstres/addCom/<?=$mtr->Id_Page?>" method="post">
+					<textarea class="form-control"  placeholder="Ecrire un doux et merveilleux commentaire" name="Text_Commentaire" rows="1"></textarea>
+					<br/>
+					<button type="submit" class="btn btn-primary">Envoyer</button>
+				</form>
 
 			<?php
 			}
 
-			if(count($commentaires) == 0){
+			if(count($commentaires) == 0)
+			{
 				echo "<p>Aucun commenaitre pour l'instant...</p>";
 			}
 			else
 			{
-				foreach ($commentaires as $com) {
+				foreach ($commentaires as $com)
+				{
 					echo "<div class='commentaire'>";
 					echo "<div class='title'>Par <b>".$com->pseudo."</b>, le ".$com->Date_Commentaire."</div>";
 					echo $com->Text_Commentaire;

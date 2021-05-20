@@ -1,9 +1,11 @@
 <?php
-class item_clef extends Model {
+class item_clef extends Model
+{
 
 	var $table = "item_clef";
 
-	function getAll($num=999){
+	function getAll($num=999)
+	{
 		return $this->find(array(
 			"inner"=> 'INNER JOIN page ON item_clef.Id_Page = page.Id_Page',
 			"order"=> 'page.id_Page ASC',
@@ -11,38 +13,46 @@ class item_clef extends Model {
 		));
 	}
 
-	function deleteIC($id){
+	function deleteIC($id)
+	{
 		$this->id=$id;
 		$this->delete(array("IdDel"=>"Id_Page"));
 		return $this->delete(array("from"=>"page","IdDel"=>"Id_Page"));
 	}
 
-	function getImage($id){
+	function getImage($id)
+	{
 		return $this->findFirst(array("fields"=>'page.Image_Page', "from"=>'page',"condition"=>'Id_Page='.$id));
 	}
 
-	function getDetail($id){
+	function getDetail($id)
+	{
 		return $this->findFirst(array(
 			"condition"=>"page.Id_Page=".$id,
 			"inner"=>"INNER JOIN page ON item_clef.Id_Page = page.Id_Page",
 			 "order"=> "page.Id_Page"));
 	}
 
-	function getId($nom){
+	function getId($nom)
+	{
 		return $this->findFirst(array("condition"=>"Nom_Page='".$nom."'", "fields"=>"Id_Page", "from"=>"page", "order"=> "Id_Page"));
 	}
 
-	function getTable(){
+	function getTable()
+	{
 		return $this->table;
 	}
 
-	function addIC($data,$from=null, $Nid=null){
+	function addIC($data,$from=null, $Nid=null)
+	{
 		//Si la talbe n'est pas celle de la classe appeller
-		if($from == null){
+		if($from == null)
+		{
 			$from ="".$this->table."";
 		}
 		//Permet de modifier l'id des updates si elle ne ce nomme pas id.
-		if($Nid == null) {
+		if($Nid == null)
+		{
 			$Nid = "id";
 		}
 		//initialise le remplissage de la table PAGE
@@ -61,23 +71,30 @@ class item_clef extends Model {
 		print_r($data);
 		$this->addContenu($data);
 	}
-//Permet de mettre à jour les items clefs, Recupere le $data avec toutes les données puis les scinde pour chaque tables.
-	function UpdateIC($data,$from=null, $Nid=null){
-		if($from == null){
+	
+	//Permet de mettre à jour les items clefs, Recupere le $data avec toutes les données puis les scinde pour chaque tables.
+	function UpdateIC($data,$from=null, $Nid=null)
+	{
+		if($from == null)
+		{
 			$from ="".$this->table."";
 		}
 		//Permet de modifier l'id des updates si elle ne ce nomme pas id.
-		if($Nid == null) {
+		if($Nid == null)
+		{
 			$Nid = "id";
 		}
 		//vérifie si l'image doit être mis à jour ou non
-	if(empty($data['Image_Page'])){
-		$tab = [
-			'id' => $data['id'],
-			'Nom_Page' => $data['Nom_Page'],
-			'Description_Page' => $data['Description_Page'],
-		];
-	} else {
+		if(empty($data['Image_Page']))
+		{
+			$tab = [
+				'id' => $data['id'],
+				'Nom_Page' => $data['Nom_Page'],
+				'Description_Page' => $data['Description_Page'],
+			];
+		}
+		else
+		{
 			$tab = [
 				'id' => $data['id'],
 				'Nom_Page' => $data['Nom_Page'],
@@ -92,7 +109,8 @@ class item_clef extends Model {
 		$this->save($data,null,$Nid);
 	}
 
-	function getNewId(){
+	function getNewId()
+	{
 		$d = $this->getMaxId();
 		$id = $d[0]->idMax + 1;
 		return $id;
